@@ -9,8 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import testpic from "@/public/testpic.jpg";
+import ateneo from "@/public/ateneo.png";
+import lasalle from "@/public/lasalle.jpg";
+import upd from "@/public/upd.jpg";
+import ust from "@/public/ust.jpg";
+import slu from "@/public/slu.jpg";
+import mapua from "@/public/mapua.jpg";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const PopSchools = () => {
   return (
@@ -22,12 +28,12 @@ const PopSchools = () => {
         </p>
       </div>
       <div className="grid grid-cols-3 mt-10  gap-5">
-        <Card className="p-0 gap-2 w-full   ">
+        <Card className="p-0 gap-0    ">
           <CardHeader className="p-0 ">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={testpic}
-              alt="testpic"
+              src={ateneo}
+              alt="ateneo"
               width={300}
               height={200}
             />
@@ -47,12 +53,12 @@ const PopSchools = () => {
           </CardContent>
         </Card>
 
-        <Card className="p-0 gap-2   ">
+        <Card className="p-0 gap-0   ">
           <CardHeader className="p-0">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={testpic}
-              alt="testpic"
+              src={lasalle}
+              alt="lasalle"
               width={300}
               height={200}
             />
@@ -72,12 +78,12 @@ const PopSchools = () => {
           </CardContent>
         </Card>
 
-        <Card className="p-0 gap-2   ">
+        <Card className="p-0 gap-0   ">
           <CardHeader className="p-0">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={testpic}
-              alt="testpic"
+              src={upd}
+              alt="upd"
               width={300}
               height={200}
             />
@@ -91,18 +97,18 @@ const PopSchools = () => {
             </CardTitle>
 
             <CardFooter className="p-0 flex justify-between">
-              <p className="text-sm text-muted-foreground">433 reviews</p>
+              <p className="text-sm text-black">433 reviews</p>
               <Button className="py-0">View</Button>
             </CardFooter>
           </CardContent>
         </Card>
 
-        <Card className="p-0 gap-2 w-full   ">
+        <Card className="p-0 gap-0 w-full   ">
           <CardHeader className="p-0 ">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={testpic}
-              alt="testpic"
+              src={ust}
+              alt="ust"
               width={300}
               height={200}
             />
@@ -122,12 +128,12 @@ const PopSchools = () => {
           </CardContent>
         </Card>
 
-        <Card className="p-0 gap-2   ">
+        <Card className="p-0 gap-0   ">
           <CardHeader className="p-0">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={testpic}
-              alt="testpic"
+              src={slu}
+              alt="slu"
               width={300}
               height={200}
             />
@@ -147,12 +153,12 @@ const PopSchools = () => {
           </CardContent>
         </Card>
 
-        <Card className="p-0 gap-2   ">
+        <Card className="p-0 gap-0   ">
           <CardHeader className="p-0">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={testpic}
-              alt="testpic"
+              src={mapua}
+              alt="mapua"
               width={300}
               height={200}
             />
@@ -173,9 +179,11 @@ const PopSchools = () => {
         </Card>
       </div>
       <div className="flex justify-center items-center mt-10">
-        <Button className="bg-gray-700 p-5.5 cursor-pointer text-base">
-          View All Schools
-        </Button>
+        <Link href="/all-schools">
+          <Button className="bg-gray-700 p-5.5 cursor-pointer text-base">
+            View All Schools
+          </Button>
+        </Link>
       </div>
     </div>
   );
