@@ -14,7 +14,6 @@ const Home = () => {
         <PopDorms />
         <HighestRatingDorms />
       </div>
-      <Footer />
     </>
   );
 };

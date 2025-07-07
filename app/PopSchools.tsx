@@ -17,6 +17,7 @@ import slu from "@/public/slu.jpg";
 import mapua from "@/public/mapua.jpg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import placeholder from "@/public/placeholder.svg";
 
 const PopSchools = () => {
   return (
@@ -32,7 +33,7 @@ const PopSchools = () => {
           <CardHeader className="p-0 ">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={ateneo}
+              src={placeholder}
               alt="ateneo"
               width={300}
               height={200}
@@ -57,7 +58,7 @@ const PopSchools = () => {
           <CardHeader className="p-0">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={lasalle}
+              src={placeholder}
               alt="lasalle"
               width={300}
               height={200}
@@ -82,7 +83,7 @@ const PopSchools = () => {
           <CardHeader className="p-0">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={upd}
+              src={placeholder}
               alt="upd"
               width={300}
               height={200}
@@ -107,7 +108,7 @@ const PopSchools = () => {
           <CardHeader className="p-0 ">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={ust}
+              src={placeholder}
               alt="ust"
               width={300}
               height={200}
@@ -132,7 +133,7 @@ const PopSchools = () => {
           <CardHeader className="p-0">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={slu}
+              src={placeholder}
               alt="slu"
               width={300}
               height={200}
@@ -157,7 +158,7 @@ const PopSchools = () => {
           <CardHeader className="p-0">
             <Image
               className="h-48 w-full object-cover rounded-md"
-              src={mapua}
+              src={placeholder}
               alt="mapua"
               width={300}
               height={200}

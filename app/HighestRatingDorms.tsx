@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import testpic from "@/public/testpic.jpg";
+import placeholder from "@/public/placeholder.svg";
 
 const PopDorms = () => {
   return (
@@ -29,7 +29,7 @@ const PopDorms = () => {
             <div className="w-full h-60   rounded-lg">
               <Image
                 className="w-full rounded-lg h-full object-cover"
-                src={testpic}
+                src={placeholder}
                 alt="testpic"
                 width={350}
                 height={200}
