@@ -26,7 +26,7 @@ const AddSchool = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto my-10 ">
+    <div className="max-w-3xl px-5 mx-auto my-10 ">
       <div className="text-center flex flex-col gap-2 ">
         <h1 className="text-2xl font-semibold">Add New School</h1>
         <p className="text-muted-foreground">

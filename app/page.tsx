@@ -8,7 +8,7 @@ import HighestRatingDorms from "./HighestRatingDorms";
 const Home = () => {
   return (
     <>
-      <div className="max-w-7xl text-center flex flex-col items-center justify-center  overflow-hidden mx-auto">
+      <div className="max-w-7xl px-5 text-center flex flex-col items-center justify-center  overflow-hidden mx-auto">
         <Landing />
         <PopSchools />
         <PopDorms />

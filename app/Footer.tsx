@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="w-full bg-gray-900 text-white   mt-10 mx-auto text-start ">
+    <div className="w-full bg-gray-900 text-white px-5   mt-10 mx-auto text-start ">
       <div className=" grid grid-cols-3 max-w-7xl mx-auto py-15">
         <div className="flex flex-col gap-2 max-w-md">
           <h1 className="font-semibold text-2xl">RateMyDorm</h1>

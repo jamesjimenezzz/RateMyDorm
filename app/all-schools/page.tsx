@@ -52,7 +52,7 @@ const AllSchools = () => {
   );
 
   return (
-    <div className="max-w-7xl mx-auto my-10">
+    <div className="max-w-7xl px-5 mx-auto my-10">
       <BackToHome />
       <div>
         <div className="flex font-semibold gap-2 items-center">

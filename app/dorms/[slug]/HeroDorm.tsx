@@ -22,10 +22,13 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import { ChartColumnIncreasing } from "lucide-react";
 import { Award } from "lucide-react";
+import { useParams } from "next/navigation";
 
 const HeroDorm = () => {
+  const { slug } = useParams();
+
   return (
-    <div className="bg-[#f9fafb] py-12 w-full">
+    <div className="bg-[#f9fafb] py-12 px-5 w-full">
       <div className=" max-w-7xl mx-auto">
         <div className="flex items-center justify-center flex-col gap-3">
           <h1 className="text-3xl font-bold">
@@ -40,9 +43,9 @@ const HeroDorm = () => {
             <p>168 total reviews</p>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-5 py-10">
+        <div className="grid grid-cols-3 gap-5 py-10">
           {Array.from({ length: 8 }).map((_, index) => (
-            <Card className="p-0 gap-0 overflow-hidden min-w-[310px]">
+            <Card className="p-0 gap-0 overflow-hidden max-w-[400px]">
               <div className="h-48  relative overflow-hidden ">
                 <Image
                   className="h-full overflow-hidden p-0 w-full object-cover"
@@ -97,18 +100,34 @@ const HeroDorm = () => {
                       className="w-full h-1.5 [&>div]:bg-gray-600"
                     />
                   </div>
+                  <div className="flex gap-2 pt-5 w-full  justify-center ">
+                    <Button className="text-xs py-0 h-8   flex-1/4 cursor-pointer">
+                      Read Reviews
+                    </Button>
+                    <Button
+                      variant={"outline"}
+                      className="text-xs cursor-pointer text-black py-0 h-8"
+                    >
+                      Write a Review
+                    </Button>
+                  </div>
                 </CardDescription>
               </CardContent>
             </Card>
           ))}
         </div>
         <div className="flex justify-center pb-10 ">
-          <Button className="cursor-pointer px-12">See More</Button>
+          <Button
+            variant={"outline"}
+            className="cursor-pointer border-gray-400 text-gray-600 hover:border-gray-700 px-12"
+          >
+            See More
+          </Button>
         </div>
 
-        <div className="py-10 max-w-lg mx-auto  border-2 border-gray-300 border-dashed  rounded-lg bg-white w-full">
-          <Link href={"/add-dorms"}>
-            <div className="flex flex-col gap-2  text-center items-center justify-centers">
+        <div className="py-10 max-w-lg mx-auto hover:bg-gray-100 transition-all duration-300 hover:border-gray-600  border-2 border-gray-300 border-dashed  rounded-lg bg-white w-full">
+          <Link href={`/add-dorms/${slug}`}>
+            <div className="flex flex-col gap-2   text-center items-center justify-centers">
               <div className="rounded-full bg-gray-200 p-4">
                 <SquareArrowOutUpRight size={25} />
               </div>
@@ -121,7 +140,7 @@ const HeroDorm = () => {
         </div>
 
         <div className="pt-12 grid grid-cols-3 gap-10">
-          <div className="bg-white border items-center justify-center text-center rounded-lg  px-8 py-7 w-[420px] flex flex-col gap-3">
+          <div className="bg-white border items-center justify-center text-center rounded-lg  px-8 py-7 max-w-[420px] flex flex-col gap-3">
             <div className="rounded-full bg-blue-200 p-2.5">
               <Heart className="text-blue-600" size={25} />
             </div>
@@ -135,7 +154,7 @@ const HeroDorm = () => {
             </p>
           </div>
 
-          <div className="bg-white border items-center justify-center text-center rounded-lg  px-8 py-7 w-[420px] flex flex-col gap-3">
+          <div className="bg-white border items-center justify-center text-center rounded-lg  px-8 py-7 max-w-[420px] flex flex-col gap-3">
             <div className="rounded-full bg-green-200 p-2.5">
               <ChartColumnIncreasing className="text-green-600" size={25} />
             </div>
@@ -146,7 +165,7 @@ const HeroDorm = () => {
             <p className="text-xs text-muted-foreground">Join 3+ reviewers</p>
           </div>
 
-          <div className="bg-white border items-center justify-center text-center rounded-lg  px-8 py-7 w-[420px] flex flex-col gap-3">
+          <div className="bg-white border items-center justify-center text-center rounded-lg  px-8 py-7 max-w-[420px] flex flex-col gap-3">
             <div className="rounded-full bg-violet-200 p-2.5">
               <Award className="text-violet-600" size={25} />
             </div>
