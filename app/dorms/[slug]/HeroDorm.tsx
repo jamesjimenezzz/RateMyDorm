@@ -101,9 +101,14 @@ const HeroDorm = () => {
                     />
                   </div>
                   <div className="flex gap-2 pt-5 w-full  justify-center ">
-                    <Button className="text-xs py-0 h-8   flex-1/4 cursor-pointer">
-                      Read Reviews
-                    </Button>
+                    <Link
+                      className="w-full flex-1/4 "
+                      href={`/reviews/${slug}/dorm-name`}
+                    >
+                      <Button className="text-xs py-0 h-8   cursor-pointer w-full">
+                        Read Reviews
+                      </Button>
+                    </Link>
                     <Button
                       variant={"outline"}
                       className="text-xs cursor-pointer text-black py-0 h-8"
