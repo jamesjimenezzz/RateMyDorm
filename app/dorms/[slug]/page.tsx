@@ -5,7 +5,7 @@ import HeroDorm from "./HeroDorm";
 const DormPage = () => {
   return (
     <>
-      <div className="max-w-7xl mx-auto px-5">
+      <div className="max-w-7xl  mx-auto px-5">
         <HeaderDorm />
       </div>
       <HeroDorm />

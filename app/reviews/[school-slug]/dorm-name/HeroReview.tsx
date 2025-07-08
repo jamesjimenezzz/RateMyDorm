@@ -27,7 +27,7 @@ const HeroReview = () => {
         </div>
 
         <div className="grid grid-cols-3 gap-4 pt-15">
-          <div className="flex flex-col sticky top-25 self-start gap-7">
+          <div className="flex flex-col sticky top-12 self-start gap-7">
             <Card>
               <CardHeader className="text-center">
                 <CardTitle className="font-bold text-3xl">4.5</CardTitle>
@@ -170,7 +170,7 @@ const HeroReview = () => {
           </div>
 
           <div className="w-full col-span-2">
-            {Array.from({ length: 4 }).map((_, index) => (
+            {Array.from({ length: 8 }).map((_, index) => (
               <Card className="mb-7">
                 <CardHeader>
                   <div className="flex flex-col gap-2">
