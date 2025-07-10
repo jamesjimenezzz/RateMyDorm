@@ -18,9 +18,16 @@ import { Textarea } from "@/components/ui/textarea";
 import LabelForm from "@/components/LabelForm";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { useFormContext, Controller } from "react-hook-form";
 
 const AddDorms = () => {
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext();
+
   const [cleanliness, setCleanliness] = useState(0);
   const [noiseLevel, setNoiseLevel] = useState(0);
   const [location, setLocation] = useState(0);
@@ -31,6 +38,8 @@ const AddDorms = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  const [picture, setPicture] = useState<File[]>([]);
 
   return (
     <div className=" py-10 px-5 ">
@@ -54,66 +63,144 @@ const AddDorms = () => {
             <div className="flex justify-between">
               <div className="flex flex-col gap-2 justify-center">
                 <LabelForm>Room Type *</LabelForm>
-                <Select>
-                  <SelectTrigger className="w-[210px] py-4.5 text-sm ">
-                    <SelectValue placeholder="Select room type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="blueberry">Blueberry</SelectItem>
-                      <SelectItem value="grapes">Grapes</SelectItem>
-                      <SelectItem value="pineapple">Pineapple</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <Controller
+                  control={control}
+                  name="roomType"
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-[210px] py-4.5 text-sm ">
+                        <SelectValue placeholder="Select room type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="Single">Single</SelectItem>
+                          <SelectItem value="Double">Double</SelectItem>
+                          <SelectItem value="Triple">Triple</SelectItem>
+                          <SelectItem value="Suit">Suit</SelectItem>
+                          <SelectItem value="Studio">Studio</SelectItem>
+                          <SelectItem value="Apartment Style">
+                            Apartment Style
+                          </SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
               </div>
 
               <div className="flex flex-col gap-2 justify-center">
                 <LabelForm>Year Lived *</LabelForm>
-                <Select>
-                  <SelectTrigger className="w-[210px] py-4.5 text-sm text-black">
-                    <SelectValue placeholder="Select year" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="blueberry">Blueberry</SelectItem>
-                      <SelectItem value="grapes">Grapes</SelectItem>
-                      <SelectItem value="pineapple">Pineapple</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <Controller
+                  control={control}
+                  name="yearLived"
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-[210px] py-4.5 text-sm text-black">
+                        <SelectValue placeholder="Select year" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="Freshman">Freshman</SelectItem>
+                          <SelectItem value="Sophomore">Sophomore</SelectItem>
+                          <SelectItem value="Junior">Junior</SelectItem>
+                          <SelectItem value="Senior">Senior</SelectItem>
+                          <SelectItem value="Graduate">Graduate</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
               </div>
 
               <div className="flex flex-col ">
                 <div className="flex flex-col gap-2 justify-center">
                   <LabelForm>Semester *</LabelForm>
-                  <Select>
-                    <SelectTrigger className="w-[210px] py-4.5 text-sm text-black">
-                      <SelectValue placeholder="Select semester" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="apple">Apple</SelectItem>
-                        <SelectItem value="banana">Banana</SelectItem>
-                        <SelectItem value="blueberry">Blueberry</SelectItem>
-                        <SelectItem value="grapes">Grapes</SelectItem>
-                        <SelectItem value="pineapple">Pineapple</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  <Controller
+                    control={control}
+                    name="semester"
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <SelectTrigger className="w-[210px] py-4.5 text-sm text-black">
+                          <SelectValue placeholder="Select semester" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="Fall">Fall</SelectItem>
+                            <SelectItem value="Spring">Spring</SelectItem>
+                            <SelectItem value="Summer">Summer</SelectItem>
+                            <SelectItem value="Full Year">Full Year</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                 </div>
               </div>
             </div>
 
-            <label className="flex flex-col items-center cursor-pointer mt-5 py-20 max-w-md mx-auto w-full border border-dashed border-gray-300 rounded-md gap-2">
-              <Input type="file" hidden multiple />
-              <UploadIcon size={25} />
-              <p className="text-base">Upload Photos</p>
-            </label>
+            <div className="flex justify-evenly py-3">
+              {errors.roomType && (
+                <p className="text-red-500 text-sm">
+                  {errors.roomType.message as string}
+                </p>
+              )}
+
+              {errors.yearLived && (
+                <p className="text-red-500 text-sm">
+                  {errors.yearLived.message as string}
+                </p>
+              )}
+
+              {errors.semester && (
+                <p className="text-red-500 text-sm">
+                  {errors.semester.message as string}
+                </p>
+              )}
+            </div>
+
+            <div className="flex items-center justify-around"></div>
+
+            {picture.length > 0 ? (
+              <div
+                className={`${
+                  picture.length > 3
+                    ? "grid grid-cols-3"
+                    : "flex items-center justify-evenly"
+                }`}
+              >
+                {picture.map((pic, i) => (
+                  <Image
+                    key={i}
+                    className="rounded-lg max-h-55 max-w-[220px]  object-cover "
+                    src={URL.createObjectURL(pic)}
+                    alt="picture"
+                    width={500}
+                    height={500}
+                  />
+                ))}
+              </div>
+            ) : (
+              <>
+                <label className="flex flex-col items-center cursor-pointer mt-5 py-20 max-w-md mx-auto w-full border border-dashed border-gray-300 rounded-md gap-2">
+                  <Input
+                    multiple
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      if (files) {
+                        setPicture(Array.from(files));
+                      }
+                    }}
+                    type="file"
+                    hidden
+                  />
+                  <UploadIcon size={25} />
+                  <p className="text-base">Upload Photos</p>
+                </label>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -128,69 +215,140 @@ const AddDorms = () => {
               <div className="flex flex-col gap-2">
                 <LabelForm>Cleanliness *</LabelForm>
                 <div className="flex items-center gap-2">
-                  <Rating
-                    onClick={(value) => setCleanliness(value)}
-                    SVGstyle={{
-                      display: "inline-block",
-                    }}
-                    size={30}
+                  <Controller
+                    control={control}
+                    name="cleanliness"
+                    render={({ field }) => (
+                      <>
+                        <Rating
+                          onClick={(value) => {
+                            field.onChange(value);
+                            setCleanliness(value);
+                          }}
+                          SVGstyle={{
+                            display: "inline-block",
+                          }}
+                          size={30}
+                          initialValue={field.value || 0}
+                        />
+
+                        <p className="mt-1 text-gray-500 text-sm">
+                          {" "}
+                          {field.value === 0 ? "Not Rated" : `${field.value}/5`}
+                        </p>
+                      </>
+                    )}
                   />
-                  <p className="mt-1 text-gray-500 text-sm">
-                    {" "}
-                    {cleanliness === 0 ? "Not Rated" : `${cleanliness}/5`}
-                  </p>
                 </div>
+
+                {errors.cleanliness && (
+                  <p className="text-red-500 text-sm">
+                    {errors.cleanliness.message as string}
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col gap-2">
                 <LabelForm>Noise Level *</LabelForm>
                 <div className="flex items-center gap-2">
-                  <Rating
-                    onClick={(value) => setNoiseLevel(value)}
-                    SVGstyle={{
-                      display: "inline-block",
-                    }}
-                    size={30}
+                  <Controller
+                    control={control}
+                    name="noiseLevel"
+                    render={({ field }) => (
+                      <>
+                        <Rating
+                          onClick={(value) => {
+                            field.onChange(value);
+                            setNoiseLevel(value);
+                          }}
+                          SVGstyle={{
+                            display: "inline-block",
+                          }}
+                          initialValue={field.value || 0}
+                          size={30}
+                        />
+                        <p className="mt-1 text-gray-500 text-sm">
+                          {" "}
+                          {field.value === 0 ? "Not Rated" : `${field.value}/5`}
+                        </p>
+                      </>
+                    )}
                   />
-                  <p className="mt-1 text-gray-500 text-sm">
-                    {" "}
-                    {noiseLevel === 0 ? "Not Rated" : `${noiseLevel}/5`}
-                  </p>
                 </div>
+                {errors.noiseLevel && (
+                  <p className="text-red-500 text-sm">
+                    {errors.noiseLevel.message as string}
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col gap-2">
                 <LabelForm>Location *</LabelForm>
                 <div className="flex items-center gap-2">
-                  <Rating
-                    onClick={(value) => setLocation(value)}
-                    SVGstyle={{
-                      display: "inline-block",
-                    }}
-                    size={30}
+                  <Controller
+                    control={control}
+                    name="location"
+                    render={({ field }) => (
+                      <>
+                        <Rating
+                          onClick={(value) => {
+                            field.onChange(value);
+                            setLocation(value);
+                          }}
+                          SVGstyle={{
+                            display: "inline-block",
+                          }}
+                          size={30}
+                          initialValue={field.value || 0}
+                        />
+
+                        <p className="mt-1 text-gray-500 text-sm">
+                          {" "}
+                          {field.value === 0 ? "Not Rated" : `${field.value}/5`}
+                        </p>
+                      </>
+                    )}
                   />
-                  <p className="mt-1 text-gray-500 text-sm">
-                    {" "}
-                    {location === 0 ? "Not Rated" : `${location}/5`}
-                  </p>
                 </div>
+                {errors.location && (
+                  <p className="text-red-500 text-sm">
+                    {errors.location.message as string}
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col gap-2">
                 <LabelForm>Amenities *</LabelForm>
                 <div className="flex items-center gap-2">
-                  <Rating
-                    onClick={(value) => setAmenities(value)}
-                    SVGstyle={{
-                      display: "inline-block",
-                    }}
-                    size={30}
+                  <Controller
+                    control={control}
+                    name="amenities"
+                    render={({ field }) => (
+                      <>
+                        <Rating
+                          onClick={(value) => {
+                            field.onChange(value);
+                            setAmenities(value);
+                          }}
+                          SVGstyle={{
+                            display: "inline-block",
+                          }}
+                          size={30}
+                          initialValue={field.value || 0}
+                        />
+                        <p className="mt-1 text-gray-500 text-sm">
+                          {" "}
+                          {field.value === 0 ? "Not Rated" : `${field.value}/5`}
+                        </p>
+                      </>
+                    )}
                   />
-                  <p className="mt-1 text-gray-500 text-sm">
-                    {" "}
-                    {amenities === 0 ? "Not Rated" : `${amenities}/5`}
-                  </p>
                 </div>
+                {errors.amenities && (
+                  <p className="text-red-500 text-sm">
+                    {errors.amenities.message as string}
+                  </p>
+                )}
               </div>
             </CardContent>
           )}
@@ -203,18 +361,30 @@ const AddDorms = () => {
             <div className="flex flex-col gap-2">
               <LabelForm>Review Title *</LabelForm>
               <Input
+                {...register("reviewTitle")}
                 className="py-5 text-sm"
                 type="text"
                 placeholder="Summarize your experience in a few words "
               />
+              {errors.reviewTitle && (
+                <p className="text-red-500 text-sm">
+                  {errors.reviewTitle.message as string}
+                </p>
+              )}
             </div>
 
             <div className="flex flex-col gap-2">
               <LabelForm>Review Title *</LabelForm>
               <Textarea
+                {...register("detailedReview")}
                 className=" text-sm h-[150px]"
                 placeholder="Share your detailed experience living in this dorm. Include information about the room, the people you lived with, and the overall experience. "
               />
+              {errors.detailedReview && (
+                <p className="text-red-500 text-sm">
+                  {errors.detailedReview.message as string}
+                </p>
+              )}
             </div>
 
             <div className="flex justify-between items-center gap-5">
@@ -223,7 +393,13 @@ const AddDorms = () => {
                 <Textarea
                   className=" text-sm  h-[80px]"
                   placeholder="List the positive aspects.  "
+                  {...register("likeMost")}
                 />
+                {errors.likeMost && (
+                  <p className="text-red-500 text-sm">
+                    {errors.likeMost.message as string}
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col gap-2 flex-1">
@@ -231,17 +407,27 @@ const AddDorms = () => {
                 <Textarea
                   className=" text-sm h-[80px]"
                   placeholder="List the areas for improvement.  "
+                  {...register("improve")}
                 />
+                {errors.improve && (
+                  <p className="text-red-500 text-sm">
+                    {errors.improve.message as string}
+                  </p>
+                )}
               </div>
             </div>
 
             <div>
               <LabelForm>Would you recommend this dorm? *</LabelForm>
-              <RadioGroup className="py-5 " defaultValue="yes">
+              <RadioGroup
+                className="py-5 "
+                defaultValue="Yes"
+                {...register("recommendDorm")}
+              >
                 <div className="flex items-center gap-3">
                   <RadioGroupItem
                     className="border-black cursor-pointer"
-                    value="yes"
+                    value="Yes"
                     id="r1"
                   />
                   <Label htmlFor="r1">Yes, I would recommend it</Label>
@@ -249,7 +435,7 @@ const AddDorms = () => {
                 <div className="flex items-center gap-3">
                   <RadioGroupItem
                     className="border-black cursor-pointer"
-                    value="no"
+                    value="No"
                     id="r2"
                   />
                   <Label htmlFor="r2">No, I would not recommend it</Label>
@@ -257,7 +443,7 @@ const AddDorms = () => {
                 <div className="flex items-center gap-3">
                   <RadioGroupItem
                     className="border-black cursor-pointer"
-                    value="maybe"
+                    value="Maybe"
                     id="r3"
                   />
                   <Label htmlFor="r3">Maybe, I would recommend it</Label>
@@ -273,6 +459,7 @@ const AddDorms = () => {
           </CardHeader>
           <CardContent className="flex items-center gap-2">
             <input
+              {...register("isAnonymous")}
               checked={anonymous}
               onChange={() => setAnonymous(!anonymous)}
               className="cursor-pointer w-4 h-4"
@@ -284,25 +471,40 @@ const AddDorms = () => {
             <CardContent className="flex justify-between w-full gap-5">
               <div className="flex flex-col w-full gap-2">
                 <LabelForm>Your Name</LabelForm>
-                <Input type="text" placeholder="Enter your name" />
+                <Input
+                  {...register("userName")}
+                  type="text"
+                  placeholder="Enter your name"
+                />
+                {errors.userName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.userName.message as string}
+                  </p>
+                )}
               </div>
 
               <div className="flex  w-full flex-col gap-2">
                 <LabelForm>Class Year</LabelForm>
-                <Select>
-                  <SelectTrigger className="w-full py-4.5 text-sm text-black">
-                    <SelectValue placeholder="Select semester" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="blueberry">Blueberry</SelectItem>
-                      <SelectItem value="grapes">Grapes</SelectItem>
-                      <SelectItem value="pineapple">Pineapple</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <Controller
+                  control={control}
+                  name="classYear"
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-full py-4.5 text-sm text-black">
+                        <SelectValue placeholder="Select semester" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="apple">Apple</SelectItem>
+                          <SelectItem value="banana">Banana</SelectItem>
+                          <SelectItem value="blueberry">Blueberry</SelectItem>
+                          <SelectItem value="grapes">Grapes</SelectItem>
+                          <SelectItem value="pineapple">Pineapple</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
               </div>
             </CardContent>
           )}

@@ -1,45 +1,119 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FirstPage from "./FirstPage";
 import SecondPage from "./SecondPage";
 import { Button } from "@/components/ui/button";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { addDormSchema, AddDormSchemaType } from "@/lib/addDormSchema";
+
 const AddDormsPage = () => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState<number>(0);
 
   const pages = [<FirstPage />, <SecondPage />];
 
   const displayPage = pages[page];
 
-  const handleNext = () => {
-    setPage(page + 1);
+  const handleNext = async () => {
+    const isValid = await form.trigger(
+      page === 0
+        ? ["dormName"]
+        : [
+            "roomType",
+            "yearLived",
+            "semester",
+            "photos",
+            "cleanliness",
+            "location",
+            "noiseLevel",
+            "amenities",
+            "reviewTitle",
+            "detailedReview",
+            "likeMost",
+            "improve",
+            "recommendDorm",
+            "isAnonymous",
+            "userName",
+            "classYear",
+          ]
+    );
+
+    if (isValid) {
+      setPage((prev) => prev + 1);
+    }
   };
 
   const handlePrevious = () => {
-    setPage(page - 1);
+    setPage((prev) => prev - 1);
+  };
+
+  const form = useForm<AddDormSchemaType>({
+    resolver: zodResolver(addDormSchema),
+    mode: "onChange",
+    defaultValues: {
+      dormName: "",
+      roomType: undefined,
+      yearLived: undefined,
+      semester: undefined,
+      photos: undefined,
+      cleanliness: 0,
+      location: 0,
+      noiseLevel: 0,
+      amenities: 0,
+      reviewTitle: "",
+      detailedReview: "",
+      likeMost: "",
+      improve: "",
+      recommendDorm: undefined,
+      isAnonymous: false,
+      userName: "",
+      classYear: undefined,
+    },
+  });
+
+  const onSubmit = (data: AddDormSchemaType) => {
+    console.log(data);
+    form.reset();
+    setPage(0);
   };
 
   return (
-    <div className="max-w-3xl overflow-hidden   mx-auto">
-      {displayPage}
-      <div
-        className={`${
-          page > 0 ? "flex px-5 gap-5 " : " "
-        }text-start w-full pb-20`}
+    <FormProvider {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="max-w-3xl overflow-hidden   mx-auto"
       >
-        {page === 0 ? (
-          <Button onClick={handleNext} className="px-15 h-9">
-            Next
-          </Button>
-        ) : (
-          <>
-            <Button className="flex-1 ">Submit Review</Button>
-            <Button variant={"outline"} onClick={handlePrevious} className="">
-              Previous
-            </Button>
-          </>
-        )}
-      </div>
-    </div>
+        {displayPage}
+        <div
+          className={`${
+            page > 0 ? "flex px-5 gap-5 " : " "
+          }text-start w-full pb-20`}
+        >
+          {page === 0 ? (
+            <button
+              className="bg-black text-white px-15 h-9 text-sm rounded-lg"
+              type="button"
+              onClick={handleNext}
+            >
+              Next
+            </button>
+          ) : (
+            <>
+              <Button type="submit" className="flex-1 ">
+                Submit Review
+              </Button>
+              <Button
+                variant={"outline"}
+                onClick={() => handlePrevious()}
+                className=""
+              >
+                Previous
+              </Button>
+            </>
+          )}
+        </div>
+      </form>
+    </FormProvider>
   );
 };
 

@@ -23,6 +23,7 @@ import { Heart } from "lucide-react";
 import { ChartColumnIncreasing } from "lucide-react";
 import { Award } from "lucide-react";
 import { useParams } from "next/navigation";
+import placeholder2 from "@/public/placeholder2.png";
 
 const HeroDorm = () => {
   const { slug } = useParams();
@@ -49,7 +50,7 @@ const HeroDorm = () => {
               <div className="h-48  relative overflow-hidden ">
                 <Image
                   className="h-full overflow-hidden p-0 w-full object-cover"
-                  src={placeholder}
+                  src={placeholder2}
                   alt="dorm"
                 />
                 <div className="absolute w-full h-full inset-0  bg-gradient-to-t from-black/30 to-transparent"></div>
