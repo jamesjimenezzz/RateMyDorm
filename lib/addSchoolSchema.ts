@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const addSchoolSchema = z.object({
-  schoolName: z
+  name: z
     .string()
     .min(3, { message: "School name must be at least 3 characters long." }),
   shortName: z

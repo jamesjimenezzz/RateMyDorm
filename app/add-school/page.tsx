@@ -20,9 +20,10 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Trash } from "lucide-react";
+import { uploadCloudinary } from "@/lib/uploadCloudinary";
 
 const AddSchool = () => {
-  const [picture, setPicture] = useState<File | null>(null);
+  const [picture, setPicture] = useState<File | string | null>(null);
 
   const handleDeletePicture = () => {
     setPicture(null);
@@ -38,10 +39,48 @@ const AddSchool = () => {
     resolver: zodResolver(addSchoolSchema),
   });
 
-  const onSubmit = (data: AddSchoolSchemaType) => {
-    console.log(data);
+  const onSubmit = async (data: AddSchoolSchemaType) => {
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
+
+    if (data.picture) {
+      const formData = new FormData();
+      formData.append("file", data.picture);
+      formData.append("upload_preset", uploadPreset);
+      formData.append("cloud_name", cloudName);
+
+      try {
+        const uploadedUrl = await uploadCloudinary({
+          files: [data.picture],
+          cloudName,
+          uploadPreset,
+        });
+
+        setValue("picture", uploadedUrl[0]);
+
+        const finalPayLoad = {
+          ...data,
+          picture: uploadedUrl,
+        };
+
+        console.log(finalPayLoad);
+        reset();
+        setPicture(null);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     reset();
     setPicture(null);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    if (file) {
+      setPicture(file);
+      setValue("picture", file);
+    }
   };
 
   return (
@@ -74,12 +113,10 @@ const AddSchool = () => {
                   className="py-5"
                   id="school-name"
                   placeholder="e.g., Harvard University"
-                  {...register("schoolName")}
+                  {...register("name")}
                 />
-                {errors.schoolName && (
-                  <p className="text-red-500 text-sm">
-                    {errors.schoolName.message}
-                  </p>
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name.message}</p>
                 )}
               </div>
               <div className="flex flex-col gap-2 my-2">
@@ -182,7 +219,11 @@ const AddSchool = () => {
                     <div className="relative">
                       <Image
                         className="rounded-lg h-70 w-xl object-cover "
-                        src={URL.createObjectURL(picture)}
+                        src={
+                          typeof picture === "string"
+                            ? picture
+                            : URL.createObjectURL(picture)
+                        }
                         alt="Picture"
                         width={100}
                         height={100}
@@ -201,11 +242,7 @@ const AddSchool = () => {
                         multiple={false}
                         accept="image/*"
                         type="file"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0] ?? null;
-                          setPicture(file);
-                          setValue("picture", file);
-                        }}
+                        onChange={handleChange}
                       />
                       <Upload className="text-gray-600" size={30} />
                       <p className="text-md">Upload Picture (Optional)</p>
