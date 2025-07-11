@@ -22,16 +22,17 @@ import Image from "next/image";
 import { useFormContext, Controller } from "react-hook-form";
 
 const AddDorms = () => {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
+
   const {
     register,
+    watch,
     control,
+    setValue,
     formState: { errors },
   } = useFormContext();
 
-  const [cleanliness, setCleanliness] = useState(0);
-  const [noiseLevel, setNoiseLevel] = useState(0);
-  const [location, setLocation] = useState(0);
-  const [amenities, setAmenities] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [anonymous, setAnonymous] = useState(false);
 
@@ -39,7 +40,21 @@ const AddDorms = () => {
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    const photosFromRhf = (watch("photos") as File[]) || undefined;
+    if (photosFromRhf?.length > 0) {
+      setPicture(photosFromRhf);
+    }
+  }, [watch]);
+
   const [picture, setPicture] = useState<File[]>([]);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(e.target.files || []);
+    const updated = [...picture, ...selectedFiles];
+    setPicture(updated);
+    setValue("photos", updated, { shouldValidate: true, shouldDirty: true });
+  };
 
   return (
     <div className=" py-10 px-5 ">
@@ -187,12 +202,7 @@ const AddDorms = () => {
                 <label className="flex flex-col items-center cursor-pointer mt-5 py-20 max-w-md mx-auto w-full border border-dashed border-gray-300 rounded-md gap-2">
                   <Input
                     multiple
-                    onChange={(e) => {
-                      const files = e.target.files;
-                      if (files) {
-                        setPicture(Array.from(files));
-                      }
-                    }}
+                    onChange={handleOnChange}
                     type="file"
                     hidden
                   />
@@ -223,7 +233,6 @@ const AddDorms = () => {
                         <Rating
                           onClick={(value) => {
                             field.onChange(value);
-                            setCleanliness(value);
                           }}
                           SVGstyle={{
                             display: "inline-block",
@@ -259,7 +268,6 @@ const AddDorms = () => {
                         <Rating
                           onClick={(value) => {
                             field.onChange(value);
-                            setNoiseLevel(value);
                           }}
                           SVGstyle={{
                             display: "inline-block",
@@ -293,7 +301,6 @@ const AddDorms = () => {
                         <Rating
                           onClick={(value) => {
                             field.onChange(value);
-                            setLocation(value);
                           }}
                           SVGstyle={{
                             display: "inline-block",
@@ -328,7 +335,6 @@ const AddDorms = () => {
                         <Rating
                           onClick={(value) => {
                             field.onChange(value);
-                            setAmenities(value);
                           }}
                           SVGstyle={{
                             display: "inline-block",

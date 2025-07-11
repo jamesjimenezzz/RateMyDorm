@@ -68,17 +68,65 @@ model School {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   dorms Dorm[]
-  addedBy User[]
+  addedById String
+  addedBy User @relation(fields: [addedById], references: id)
 }
 
+
+enum RoomType {
+  single
+  double
+  triple
+  suite
+  studio
+  apartmentStyle
+}
+
+enum YearLived {
+  freshman
+  sophomore
+  junior
+  senior
+  graduate
+}
+
+enum Semester {
+  fall
+  spring
+  summer
+  fullYear
+}
+
+enum Recommendation {
+  yes
+  no
+  maybe
+}
 
 model Dorm {
   id String @id @default(uuid())
   name String
+  roomType RoomType
+  yearLived YearLived
+  semester Semester
+  photoUrl String?
+  cleanlinessRate Int
+  noiseLevelRate Int
+  locationRate Int
+  amenitiesRate Int
+  reviewTitle String
+  reviewDescription String
+  likeMost String
+  improve String
+  recommendation Recommendation
+  isAnonymous Boolean
+  userName String? 
+  classYear YearLived
   schoolId String
   school School @relation(fields: [schoolId], references: [id] )
   status Status @default(pending)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  addedBy User[]
+  addedById String
+  addedBy User @relation(fields: [addedById], references: [id])
 }

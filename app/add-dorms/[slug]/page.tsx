@@ -6,9 +6,12 @@ import { Button } from "@/components/ui/button";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addDormSchema, AddDormSchemaType } from "@/lib/addDormSchema";
+import { uploadCloudinary } from "@/lib/uploadCloudinary";
+import { FileSymlink } from "lucide-react";
 
 const AddDormsPage = () => {
   const [page, setPage] = useState<number>(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const pages = [<FirstPage />, <SecondPage />];
 
@@ -71,10 +74,32 @@ const AddDormsPage = () => {
     },
   });
 
-  const onSubmit = (data: AddDormSchemaType) => {
-    console.log(data);
-    form.reset();
-    setPage(0);
+  const onSubmit = async (data: AddDormSchemaType) => {
+    setIsSubmitting(true);
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
+
+    const files = (data.photos as File[]) || undefined;
+
+    try {
+      const uploadedUrls = await uploadCloudinary({
+        files,
+        cloudName,
+        uploadPreset,
+      });
+
+      const finalPayLoad = {
+        ...data,
+        photos: uploadedUrls,
+      };
+      console.log(finalPayLoad);
+      form.reset();
+      setPage(0);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -99,10 +124,11 @@ const AddDormsPage = () => {
             </button>
           ) : (
             <>
-              <Button type="submit" className="flex-1 ">
+              <Button disabled={isSubmitting} type="submit" className="flex-1 ">
                 Submit Review
               </Button>
               <Button
+                disabled={isSubmitting}
                 variant={"outline"}
                 onClick={() => handlePrevious()}
                 className=""
