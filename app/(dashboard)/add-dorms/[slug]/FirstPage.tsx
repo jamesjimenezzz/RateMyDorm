@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import BackToHome from "@/components/BackToHome";
 import LabelForm from "@/components/LabelForm";
 import { useFormContext } from "react-hook-form";
+import { School } from "@prisma/client";
 
-const FirstPage = () => {
+const FirstPage = ({ school }: { school: School }) => {
   const {
     register,
     formState: { errors },
@@ -22,9 +23,9 @@ const FirstPage = () => {
       </div>
 
       <div className="flex flex-col  text-start">
-        <h1 className="text-3xl font-bold">Add a dorm to Boston University</h1>
+        <h1 className="text-3xl font-bold">Add a dorm to {school.name}</h1>
         <p className="text-muted-foreground text-base">
-          Enter the name of the BU dorm you are reviewing.
+          Enter the name of the {school.name} dorm you are reviewing.
         </p>
       </div>
 

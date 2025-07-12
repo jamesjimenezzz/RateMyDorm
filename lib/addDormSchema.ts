@@ -19,8 +19,8 @@ export const addDormSchema = z.object({
   photos: z
     .any()
     .optional()
-    .refine((files) => !files || files.length > 0, {
-      message: "At least one photo is required if uploading.",
+    .refine((val) => val === undefined || val.length > 0, {
+      message: "If photos are provided, at least one is required.",
     }),
 
   cleanliness: z.number().min(1, { message: "Cleanliness is required." }),

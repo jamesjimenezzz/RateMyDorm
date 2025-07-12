@@ -24,10 +24,11 @@ import { ChartColumnIncreasing } from "lucide-react";
 import { Award } from "lucide-react";
 import { useParams } from "next/navigation";
 import placeholder2 from "@/public/placeholder2.png";
+import Dorms from "./Dorms";
+import { School } from "@prisma/client";
+import { Dorm } from "@prisma/client";
 
-const HeroDorm = () => {
-  const { slug } = useParams();
-
+const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
   return (
     <div className="bg-[#f9fafb] py-12 px-5 w-full">
       <div className=" max-w-7xl mx-auto">
@@ -45,82 +46,15 @@ const HeroDorm = () => {
           </div>
         </div>
         <div className="grid grid-cols-3 gap-5 py-10">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <Card className="p-0 gap-0 overflow-hidden max-w-[400px]">
-              <div className="h-48  relative overflow-hidden ">
-                <Image
-                  className="h-full overflow-hidden p-0 w-full object-cover"
-                  src={placeholder2}
-                  alt="dorm"
-                />
-                <div className="absolute w-full h-full inset-0  bg-gradient-to-t from-black/30 to-transparent"></div>
-                <div className="absolute top-3 right-3 flex items-center gap-1">
-                  <div className="flex bg-gray-100 rounded-xl px-2.5 py-1 items-center gap-1.5">
-                    <Star className="fill-gray-500 text-gray-500" size={13} />
-                    <p className="text-sm font-[500]">4.7</p>
-                  </div>
-                </div>
-                <div className="absolute bottom-3 left-3 flex items-center gap-1">
-                  <div className=" bg-gray-100 rounded-xl px-2.5 py-1 items-center gap-1.5">
-                    <p className="text-xs text-gray-600  font-semibold">
-                      Traditional
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <CardContent className="p-0 pb-5 flex flex-col gap-1.5 pt-5 px-3">
-                <CardTitle className="text-base font-bold">Dorm Name</CardTitle>
-                <CardDescription className="text-sm mb-2.5 flex justify-between text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <Users size={15} />
-                    <p>1200</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MessageSquareMore size={15} />
-                    <p>78 reviews</p>
-                  </div>
-                </CardDescription>
-                <CardDescription className="text-sm w-full  flex flex-col gap-2 text-muted-foreground">
-                  <div className="flex items-center justify-between w-full">
-                    <div>
-                      <p className="text-xs">Student Rating</p>
-                    </div>
-                    <div>
-                      <Rating
-                        SVGstyle={{
-                          display: "inline-block",
-                        }}
-                        initialValue={4}
-                        size={15}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Progress
-                      value={80}
-                      className="w-full h-1.5 [&>div]:bg-gray-600"
-                    />
-                  </div>
-                  <div className="flex gap-2 pt-5 w-full  justify-center ">
-                    <Link
-                      className="w-full flex-1/4 "
-                      href={`/reviews/${slug}/dorm-name`}
-                    >
-                      <Button className="text-xs py-0 h-8   cursor-pointer w-full">
-                        Read Reviews
-                      </Button>
-                    </Link>
-                    <Button
-                      variant={"outline"}
-                      className="text-xs cursor-pointer text-black py-0 h-8"
-                    >
-                      Write a Review
-                    </Button>
-                  </div>
-                </CardDescription>
-              </CardContent>
-            </Card>
-          ))}
+          {school?.dorms?.length > 0 ? (
+            school?.dorms?.map((dorm: Dorm) => (
+              <Dorms key={dorm.id} dorm={dorm} />
+            ))
+          ) : (
+            <div className="flex justify-center items-center h-full w-full">
+              <p>No dorms found</p>
+            </div>
+          )}
         </div>
         <div className="flex justify-center pb-10 ">
           <Button
@@ -132,7 +66,7 @@ const HeroDorm = () => {
         </div>
 
         <div className="py-10 max-w-lg mx-auto hover:bg-gray-100 transition-all duration-300 hover:border-gray-600  border-2 border-gray-300 border-dashed  rounded-lg bg-white w-full">
-          <Link href={`/add-dorms/${slug}`}>
+          <Link href={`/add-dorms/${school.slug}`}>
             <div className="flex flex-col gap-2   text-center items-center justify-centers">
               <div className="rounded-full bg-gray-200 p-4">
                 <SquareArrowOutUpRight size={25} />

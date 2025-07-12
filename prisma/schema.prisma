@@ -77,33 +77,33 @@ model School {
 
 
 enum RoomType {
-  single
-  double
-  triple
-  suite
-  studio
-  apartmentStyle
+  Single
+  Double
+  Triple
+  Suite
+  Studio
+  ApartmentStyle
 }
 
 enum YearLived {
-  freshman
-  sophomore
-  junior
-  senior
-  graduate
+  Freshman
+  Sophomore
+  Junior
+  Senior
+  Graduate
 }
 
 enum Semester {
-  fall
-  spring
-  summer
-  fullYear
+  Fall
+  Spring
+  Summer
+  FullYear
 }
 
 enum Recommendation {
-  yes
-  no
-  maybe
+  Yes
+  No
+  Maybe
 }
 
 model Dorm {
@@ -112,7 +112,7 @@ model Dorm {
   roomType RoomType
   yearLived YearLived
   semester Semester
-  photoUrl String?
+photoUrl String[] @default([])
   cleanlinessRate Int
   noiseLevelRate Int
   locationRate Int
@@ -124,7 +124,7 @@ model Dorm {
   recommendation Recommendation
   isAnonymous Boolean
   userName String? 
-  classYear YearLived
+  classYear YearLived?
   schoolSlug String
   school School @relation(fields: [schoolSlug], references: [slug] )
   status Status @default(pending)

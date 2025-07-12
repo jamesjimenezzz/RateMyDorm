@@ -91,9 +91,9 @@ const AddDorms = () => {
                           <SelectItem value="Single">Single</SelectItem>
                           <SelectItem value="Double">Double</SelectItem>
                           <SelectItem value="Triple">Triple</SelectItem>
-                          <SelectItem value="Suit">Suit</SelectItem>
+                          <SelectItem value="Suite">Suite</SelectItem>
                           <SelectItem value="Studio">Studio</SelectItem>
-                          <SelectItem value="Apartment Style">
+                          <SelectItem value="ApartmentStyle">
                             Apartment Style
                           </SelectItem>
                         </SelectGroup>
@@ -146,7 +146,7 @@ const AddDorms = () => {
                             <SelectItem value="Fall">Fall</SelectItem>
                             <SelectItem value="Spring">Spring</SelectItem>
                             <SelectItem value="Summer">Summer</SelectItem>
-                            <SelectItem value="Full Year">Full Year</SelectItem>
+                            <SelectItem value="FullYear">Full Year</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -501,11 +501,11 @@ const AddDorms = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectItem value="apple">Apple</SelectItem>
-                          <SelectItem value="banana">Banana</SelectItem>
-                          <SelectItem value="blueberry">Blueberry</SelectItem>
-                          <SelectItem value="grapes">Grapes</SelectItem>
-                          <SelectItem value="pineapple">Pineapple</SelectItem>
+                          <SelectItem value="Freshman">Freshman</SelectItem>
+                          <SelectItem value="Sophomore">Sophomore</SelectItem>
+                          <SelectItem value="Junior">Junior</SelectItem>
+                          <SelectItem value="Senior">Senior</SelectItem>
+                          <SelectItem value="Graduate">Graduate</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>

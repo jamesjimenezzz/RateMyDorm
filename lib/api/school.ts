@@ -29,3 +29,14 @@ export async function addSchool(data: AddSchoolSchemaType) {
     return null;
   }
 }
+
+export async function fetchSchool(slug: string) {
+  try {
+    const res = await fetch(`/api/school/${slug}`);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

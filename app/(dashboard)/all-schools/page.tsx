@@ -1,8 +1,12 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import BackToHome from "@/components/BackToHome";
+import { useFetchSchools } from "@/hooks/useSchool";
 
 const AllSchools = () => {
+  const { data: schoolsData, isFetching } = useFetchSchools();
+
   const schools = [
     "University of the Philippines Diliman",
 
@@ -43,20 +47,16 @@ const AllSchools = () => {
     "Western Mindanao State University",
   ];
 
-  const filterAlphabetically = schools.sort((a, b) => {
-    return a.localeCompare(b);
+  const filterAlphabetically = schoolsData?.sort((a, b) => {
+    return a.name.localeCompare(b.name);
   });
-
-  const slug = filterAlphabetically.map((school) =>
-    school.toLowerCase().replace(/ /g, "-")
-  );
 
   return (
     <div className="max-w-7xl px-5 mx-auto min-h-screen my-10">
       <BackToHome />
       <div>
         <div className="flex font-semibold gap-2 items-center">
-          <p className=" text-2xl">{schools.length}</p>
+          <p className=" text-2xl">{schoolsData?.length}</p>
           <h1 className="text-2xl">Schools on RateMyDorm</h1>
         </div>
         <div className="flex gap-2 items-center">
@@ -69,12 +69,12 @@ const AllSchools = () => {
         </div>
       </div>
       <div className="my-7">
-        {filterAlphabetically.map((school, index) => (
+        {filterAlphabetically?.map((school, index) => (
           <p
             className="font-[500] my-1.5 hover:underline cursor-pointer"
-            key={school}
+            key={school.id}
           >
-            <Link href={`/dorms/${slug[index]}`}>{school}</Link>
+            <Link href={`/dorms/${school.slug}`}>{school.name} </Link>
           </p>
         ))}
       </div>

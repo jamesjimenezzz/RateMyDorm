@@ -8,14 +8,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { addDormSchema, AddDormSchemaType } from "@/lib/addDormSchema";
 import { uploadCloudinary } from "@/lib/uploadCloudinary";
 import { FileSymlink } from "lucide-react";
+import { notFound, useParams } from "next/navigation";
+import { useFetchSchool } from "@/hooks/useSchool";
+import { useAddDorm } from "@/hooks/useDorm";
 
 const AddDormsPage = () => {
+  const { slug } = useParams();
   const [page, setPage] = useState<number>(0);
+  const { data: school } = useFetchSchool(slug as string);
+  const { mutate } = useAddDorm();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const pages = [<FirstPage />, <SecondPage />];
+  const pages = [<FirstPage school={school} />, <SecondPage />];
 
   const displayPage = pages[page];
+
+  if (!school) {
+    return notFound();
+  }
 
   const handleNext = async () => {
     const isValid = await form.trigger(
@@ -82,17 +93,22 @@ const AddDormsPage = () => {
     const files = (data.photos as File[]) || undefined;
 
     try {
-      const uploadedUrls = await uploadCloudinary({
-        files,
-        cloudName,
-        uploadPreset,
-      });
+      const uploadedUrls = files
+        ? await uploadCloudinary({
+            files,
+            cloudName,
+            uploadPreset,
+          })
+        : [];
 
       const finalPayLoad = {
         ...data,
         photos: uploadedUrls,
       };
-      console.log(finalPayLoad);
+      mutate({
+        dorm: finalPayLoad,
+        slug: slug as string,
+      });
       form.reset();
       setPage(0);
     } catch (error) {

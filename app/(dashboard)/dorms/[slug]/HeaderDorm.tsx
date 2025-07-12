@@ -7,8 +7,11 @@ import { Button } from "@/components/ui/button";
 import placeholder from "@/public/placeholder.svg";
 import Image from "next/image";
 import { Rating } from "react-simple-star-rating";
+import { useFetchSchool } from "@/hooks/useSchool";
+import { useParams } from "next/navigation";
+import { School } from "@prisma/client";
 
-const DormPage = () => {
+const DormPage = ({ school }: { school: School }) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const DormPage = () => {
       <div className="grid grid-cols-2 items-center pb-5 gap-8">
         <div className="flex flex-col gap-4 ">
           <div className="flex items-center gap-5">
-            <h1 className="text-4xl font-bold">Boston University</h1>
+            <h1 className="text-4xl font-bold">{school?.name}</h1>
             <span className="flex items-center bg-gray-100 rounded-xl px-2.5 py-1 gap-2">
               <Star className="fill-yellow-400 text-yellow-400" size={15} />
               <p className="text-xs font-semibold">4.5</p>
