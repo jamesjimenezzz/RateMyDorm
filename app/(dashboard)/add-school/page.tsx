@@ -21,9 +21,11 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Trash } from "lucide-react";
 import { uploadCloudinary } from "@/lib/uploadCloudinary";
+import { useAddSchool } from "@/hooks/useSchool";
 
 const AddSchool = () => {
   const [picture, setPicture] = useState<File | string | null>(null);
+  const { mutate, isPending } = useAddSchool();
 
   const handleDeletePicture = () => {
     setPicture(null);
@@ -63,7 +65,7 @@ const AddSchool = () => {
           picture: uploadedUrl,
         };
 
-        console.log(finalPayLoad);
+        mutate(finalPayLoad);
         reset();
         setPicture(null);
       } catch (error) {

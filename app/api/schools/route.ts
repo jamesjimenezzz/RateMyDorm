@@ -64,13 +64,13 @@ export async function POST(req: Request) {
       data: {
         name,
         shortName,
-        slug: slug,
+        slug,
         city,
         state,
         schoolType,
         dormsNearby,
-        website: website || "",
-        picture: picture || [],
+        website,
+        picture,
         addedById: user.id,
       },
     });

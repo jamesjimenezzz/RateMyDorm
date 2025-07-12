@@ -1,5 +1,5 @@
 import { School } from "@prisma/client";
-import { SchoolPassData } from "@/types";
+import { AddSchoolSchemaType } from "@/lib/addSchoolSchema";
 
 export async function fetchSchools(): Promise<School[]> {
   try {
@@ -12,10 +12,13 @@ export async function fetchSchools(): Promise<School[]> {
   }
 }
 
-export async function addSchool(data: SchoolPassData) {
+export async function addSchool(data: AddSchoolSchemaType) {
   try {
     const res = await fetch("/api/schools", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     });
 

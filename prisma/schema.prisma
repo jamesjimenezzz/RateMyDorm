@@ -29,6 +29,7 @@ model User {
   email String @unique
   imageUrl String?
   role Role @default(user)
+  clerkId String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   addedSchools School[]
@@ -43,28 +44,29 @@ enum Status {
 }
 
 enum SchoolType {
-  public
-  private
-  community
-  liberalArts
+  Public
+  Private
+  Community
+  LiberalArts
 }
 
 enum DormsNearby {
-  yes
-  some
-  none
+  Yes
+  Some
+  None
 }
 
 model School {
   id String @id @default(uuid())
   name String
   shortName String?
+  slug String @unique
   city String
   state String
   schoolType SchoolType
   dormsNearby  DormsNearby
   website String?
-  picture String?
+  picture String[]
   status Status @default(pending)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -123,8 +125,8 @@ model Dorm {
   isAnonymous Boolean
   userName String? 
   classYear YearLived
-  schoolId String
-  school School @relation(fields: [schoolId], references: [id] )
+  schoolSlug String
+  school School @relation(fields: [schoolSlug], references: [slug] )
   status Status @default(pending)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
