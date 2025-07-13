@@ -48,7 +48,7 @@ const DormPage = ({ school }: { school: School }) => {
               <span>
                 <Users className="text-gray-600" size={20} />
               </span>{" "}
-              433 Reviews
+              433 Dorm Reviews
             </p>
             <div className="pb-1 flex items-center ">
               {isMounted && (

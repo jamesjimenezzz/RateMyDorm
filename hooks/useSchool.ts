@@ -9,9 +9,10 @@ import { addSchool } from "@/lib/api/school";
 import { SchoolPassData } from "@/types";
 
 export function useFetchSchools() {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["schools"],
     queryFn: fetchSchools,
+    refetchOnWindowFocus: false,
   });
 }
 

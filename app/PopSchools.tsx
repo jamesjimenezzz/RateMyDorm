@@ -18,8 +18,13 @@ import mapua from "@/public/mapua.jpg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import placeholder from "@/public/placeholder.svg";
+import { School } from "@prisma/client";
 
-const PopSchools = () => {
+interface Props {
+  schools: School[];
+}
+
+const PopSchools = ({ schools }: Props) => {
   return (
     <div className="min-h-screen w-full max-w-7xl mx-auto">
       <div className="flex flex-col gap-2">

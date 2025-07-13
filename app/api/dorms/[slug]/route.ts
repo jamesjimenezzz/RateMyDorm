@@ -70,40 +70,47 @@ export async function POST(
 
   const { slug } = await params;
 
+  const dormSlug = dormName.toLowerCase().replace(/ /g, "-");
+
   try {
-    console.log("📦 Incoming body:", body);
-    console.log("👤 Authenticated userId:", userId);
-    console.log("✅ checkUser.id:", checkUser?.id);
+    const [dorm, review] = await prisma.$transaction([
+      prisma.dorm.create({
+        data: {
+          name: dormName,
+          roomType,
+          yearLived,
+          photoUrl: photos,
+          semester,
+          schoolSlug: slug,
+          slug: dormSlug,
+          addedById: checkUser.id,
+        },
+      }),
 
-    const dorm = await prisma.dorm.create({
-      data: {
-        name: dormName,
-        roomType,
-        yearLived,
-        semester,
-        photoUrl: photos,
-        cleanlinessRate: cleanliness,
-        noiseLevelRate: noiseLevel,
-        locationRate: location,
-        amenitiesRate: amenities,
-        reviewTitle,
-        reviewDescription: detailedReview,
-        likeMost,
-        improve,
-        recommendation: recommendDorm,
-        isAnonymous,
-        userName,
-        classYear,
-        schoolSlug: slug,
-        addedById: checkUser.id,
-      },
-    });
-
-    return NextResponse.json(dorm);
+      prisma.review.create({
+        data: {
+          cleanlinessRate: cleanliness,
+          noiseLevelRate: noiseLevel,
+          locationRate: location,
+          amenitiesRate: amenities,
+          reviewTitle,
+          reviewDescription: detailedReview,
+          likeMost,
+          improve,
+          recommendation: recommendDorm,
+          isAnonymous,
+          classYear,
+          userName: userName,
+          dormSlug: dormSlug,
+          userId: checkUser.id,
+        },
+      }),
+    ]);
+    return NextResponse.json({ dorm, review });
   } catch (error) {
-    console.error("❌ Error creating dorm:", error);
+    console.error(error);
     return NextResponse.json(
-      { error: "Failed to create dorm", details: error },
+      { error: "Failed to create dorm and review" },
       { status: 500 }
     );
   }

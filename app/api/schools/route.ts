@@ -9,7 +9,6 @@ export async function GET() {
         createdAt: "desc",
       },
       include: {
-        addedBy: true,
         dorms: true,
       },
     });

@@ -7,46 +7,6 @@ import { useFetchSchools } from "@/hooks/useSchool";
 const AllSchools = () => {
   const { data: schoolsData, isFetching } = useFetchSchools();
 
-  const schools = [
-    "University of the Philippines Diliman",
-
-    "Ateneo de Manila University",
-    "De La Salle University",
-    "University of Santo Tomas",
-    "Polytechnic University of the Philippines",
-    "Far Eastern University",
-    "Mapúa University",
-    "Adamson University",
-    "Pamantasan ng Lungsod ng Maynila",
-    "Technological Institute of the Philippines",
-    "University of the East",
-    "Centro Escolar University",
-    "Lyceum of the Philippines University",
-    "Philippine Normal University",
-    "National University",
-    "University of the Philippines Los Baños",
-    "Batangas State University",
-    "Pangasinan State University",
-    "Mariano Marcos State University",
-    "Bicol University",
-    "University of the Philippines Visayas",
-    "University of San Carlos",
-    "Silliman University",
-    "University of the Visayas",
-    "Cebu Technological University",
-    "Central Philippine University",
-    "University of Negros Occidental - Recoletos",
-    "West Visayas State University",
-    "Mindanao State University Main Campus",
-    "Ateneo de Davao University",
-    "Xavier University Ateneo de Cagayan",
-    "University of Southeastern Philippines",
-    "University of Mindanao",
-    "Central Mindanao University",
-    "Mindanao State University Iligan Institute of Technology",
-    "Western Mindanao State University",
-  ];
-
   const filterAlphabetically = schoolsData?.sort((a, b) => {
     return a.name.localeCompare(b.name);
   });

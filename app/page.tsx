@@ -1,14 +1,9 @@
 import React from "react";
-import Landing from "./Landing";
-import PopSchools from "./PopSchools";
-import Footer from "./Footer";
-import PopDorms from "./PopDorms";
-import HighestRatingDorms from "./HighestRatingDorms";
+import Home from "./Home";
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 import { createUser } from "@/lib/db/createUsers";
 
-const Home = async () => {
+const page = async () => {
   const { userId } = await auth();
 
   if (userId) {
@@ -17,14 +12,9 @@ const Home = async () => {
 
   return (
     <>
-      <div className="max-w-7xl px-5 text-center flex flex-col items-center justify-center  overflow-hidden mx-auto">
-        <Landing />
-        <PopSchools />
-        <PopDorms />
-        <HighestRatingDorms />
-      </div>
+      <Home />
     </>
   );
 };
 
-export default Home;
+export default page;

@@ -4,6 +4,9 @@ import { AddSchoolSchemaType } from "@/lib/addSchoolSchema";
 export async function fetchSchools(): Promise<School[]> {
   try {
     const res = await fetch("/api/schools");
+    if (!res.ok) {
+      throw new Error("Failed to fetch schools");
+    }
     const data = await res.json();
     return data;
   } catch (error) {
