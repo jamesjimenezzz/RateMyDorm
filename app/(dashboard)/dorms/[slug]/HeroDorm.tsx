@@ -33,14 +33,17 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
     <div className="bg-[#f9fafb] py-12 px-5 w-full">
       <div className=" max-w-7xl mx-auto">
         <div className="flex items-center justify-center flex-col gap-3">
-          <h1 className="text-3xl font-bold">
-            Rate Dorms at Northeastern University
+          <h1 className="text-3xl font-semibold">
+            Rate Dorms at{" "}
+            <span className="text-gray-800 font-bold  border-gray-400 border-b-2">
+              {school.name}
+            </span>
           </h1>
           <p>
             Share your experience and read honest reviews from fellow students
           </p>
           <div className="text-muted-foreground flex gap-5">
-            <p>3 residence halls</p>
+            <p>{school.dorms.length} residence halls</p>
             <span>•</span>
             <p>168 total reviews</p>
           </div>
@@ -56,14 +59,16 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
             </div>
           )}
         </div>
-        <div className="flex justify-center pb-10 ">
-          <Button
-            variant={"outline"}
-            className="cursor-pointer border-gray-400 text-gray-600 hover:border-gray-700 px-12"
-          >
-            See More
-          </Button>
-        </div>
+        {school.dorms.length > 6 && (
+          <div className="flex justify-center pb-10 ">
+            <Button
+              variant={"outline"}
+              className="cursor-pointer border-gray-400 text-gray-600 hover:border-gray-700 px-12"
+            >
+              See More
+            </Button>
+          </div>
+        )}
 
         <div className="py-10 max-w-lg mx-auto hover:bg-gray-100 transition-all duration-300 hover:border-gray-600  border-2 border-gray-300 border-dashed  rounded-lg bg-white w-full">
           <Link href={`/add-dorms/${school.slug}`}>

@@ -26,3 +26,19 @@ export const addDorm = async ({ dorm, slug }: AddDormProps) => {
     return { error: "Failed to add dorm" };
   }
 };
+
+export const fetchDorm = async (slug: string) => {
+  try {
+    const res = await fetch(`/api/dorm/${slug}`);
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch dorm");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: "Failed to fetch dorm" };
+  }
+};

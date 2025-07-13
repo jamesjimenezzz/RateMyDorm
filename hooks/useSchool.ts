@@ -30,5 +30,6 @@ export function useFetchSchool(slug: string) {
   return useSuspenseQuery({
     queryKey: ["school", slug],
     queryFn: () => fetchSchool(slug),
+    retry: false,
   });
 }

@@ -40,12 +40,14 @@ const Dorms = ({ dorm }: { dorm: Dorm }) => {
         </div>
         <div className="absolute bottom-3 left-3 flex items-center gap-1">
           <div className=" bg-gray-100 rounded-xl px-2.5 py-1 items-center gap-1.5">
-            <p className="text-xs text-gray-600  font-semibold">Traditional</p>
+            <p className="text-xs text-gray-600  font-semibold">
+              {dorm.roomType}
+            </p>
           </div>
         </div>
       </div>
       <CardContent className="p-0 pb-5 flex flex-col gap-1.5 pt-5 px-3">
-        <CardTitle className="text-base font-bold">Dorm Name</CardTitle>
+        <CardTitle className="text-base font-bold">{dorm.name}</CardTitle>
         <CardDescription className="text-sm mb-2.5 flex justify-between text-muted-foreground">
           <div className="flex items-center gap-2">
             <Users size={15} />
@@ -77,7 +79,7 @@ const Dorms = ({ dorm }: { dorm: Dorm }) => {
           <div className="flex gap-2 pt-5 w-full  justify-center ">
             <Link
               className="w-full flex-1/4 "
-              href={`/reviews/${slug}/dorm-name`}
+              href={`/reviews/${slug}/${dorm.name}`}
             >
               <Button className="text-xs py-0 h-8   cursor-pointer w-full">
                 Read Reviews

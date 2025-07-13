@@ -10,6 +10,7 @@ import { Rating } from "react-simple-star-rating";
 import { useFetchSchool } from "@/hooks/useSchool";
 import { useParams } from "next/navigation";
 import { School } from "@prisma/client";
+import BackToAllSchools from "@/components/BackToAllSchools";
 
 const DormPage = ({ school }: { school: School }) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -21,7 +22,7 @@ const DormPage = ({ school }: { school: School }) => {
   return (
     <div className="pb-12">
       <div className="pt-10 ">
-        <BackToHome />
+        <BackToAllSchools />
       </div>
       <div className="grid grid-cols-2 items-center pb-5 gap-8">
         <div className="flex flex-col gap-4 ">
@@ -36,7 +37,7 @@ const DormPage = ({ school }: { school: School }) => {
             <span>
               <MapPin size={16} />
             </span>{" "}
-            Boston, MA
+            {school.city}, {school.state}
           </p>
           <p className="text-gray-600 text-lg mb-2">
             Boston University is a leading private research university with two
@@ -74,7 +75,7 @@ const DormPage = ({ school }: { school: School }) => {
         <div className="h-80 w-full">
           <Image
             className="h-full w-full object-cover rounded-lg"
-            src={placeholder}
+            src={school?.picture[0] || placeholder}
             alt="dorm"
             width={800}
             height={300}

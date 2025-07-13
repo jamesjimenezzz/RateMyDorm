@@ -7,7 +7,7 @@ import { notFound, useParams } from "next/navigation";
 
 const DormPage = () => {
   const { slug } = useParams();
-  const { data: school } = useFetchSchool(slug as string);
+  const { data: school, isFetching } = useFetchSchool(slug as string);
 
   if (!school) {
     return notFound();

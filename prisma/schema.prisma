@@ -125,6 +125,7 @@ photoUrl String[] @default([])
   isAnonymous Boolean
   userName String? 
   classYear YearLived?
+  slug String? @unique
   schoolSlug String
   school School @relation(fields: [schoolSlug], references: [slug] )
   status Status @default(pending)
