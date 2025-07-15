@@ -6,62 +6,76 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Rating } from "react-simple-star-rating";
+import { Review as ReviewType } from "@prisma/client";
+import { calculateRatings } from "@/lib/calculateRatings";
 
-const Review = () => {
+const Review = ({ review }: { review: ReviewType }) => {
+  const genreOfRates = [
+    review.cleanlinessRate,
+    review.noiseLevelRate,
+    review.locationRate,
+    review.amenitiesRate,
+  ];
+
+  const { averageRateByUser } = calculateRatings([review]);
+
   return (
     <>
-      {Array.from({ length: 8 }).map((_, index) => (
-        <Card className="mb-7">
-          <CardHeader>
-            <div className="flex flex-col gap-2">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <Rating
-                    SVGstyle={{
-                      display: "inline-block",
-                    }}
-                    initialValue={4}
-                    size={20}
-                    readonly
-                  />
-                  <p className="font-semibold pt-0.5">4/5</p>
-                </div>
-
-                <div>
-                  <p className="text-sm text-gray-500">2 weeks ago</p>
-                </div>
+      <Card className="mb-7">
+        <CardHeader>
+          <div className="flex flex-col gap-2">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <Rating
+                  SVGstyle={{
+                    display: "inline-block",
+                  }}
+                  initialValue={averageRateByUser[0]}
+                  size={20}
+                  allowFraction
+                  readonly
+                />
+                <p className="font-semibold pt-0.5">
+                  {averageRateByUser[0].toFixed(1)} / 5
+                </p>
               </div>
 
               <div>
-                <h1 className="font-semibold">Classic dorm experience</h1>
+                <p className="text-sm text-gray-500">
+                  {new Date(review.createdAt).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </p>
               </div>
             </div>
-          </CardHeader>
-          <CardContent>
-            <p className="text-base text-gray-500">
-              If you want the traditional college dorm experience, Warren is
-              perfect. Made so many friends here and the RAs are really helpful.
-              The study rooms get busy during finals but overall great place to
-              live.
-            </p>
-          </CardContent>
-          <CardFooter className="  ">
-            <div className="text-sm text-gray-500 flex justify-between items-center w-full border-t border-gray-300 pt-5">
-              <div className="flex items-center gap-4 ">
-                <p>Emma L.</p>
-                <p>•</p>
-                <p>Junior</p>
-                <p>•</p>
-                <p>Single</p>
-                <p>•</p>
-                <p>Fall 2022</p>
-              </div>
 
-              <div>15 Helpful votes</div>
+            <div>
+              <h1 className="font-semibold">{review.reviewTitle}</h1>
             </div>
-          </CardFooter>
-        </Card>
-      ))}
+          </div>
+        </CardHeader>
+        <CardContent>
+          <p className="text-base text-gray-500">{review.reviewDescription}</p>
+        </CardContent>
+        <CardFooter className="  ">
+          <div className="text-sm text-gray-500 flex justify-between items-center w-full border-t border-gray-300 pt-5">
+            <div className="flex items-center gap-4 ">
+              <p>{review.userName || "Anonymous"}</p>
+              <p>•</p>
+              <p>{review.yearLived}</p>
+              <p>•</p>
+              <p>{review.roomType}</p>
+              <p>•</p>
+              <p>{review.semester}</p>
+              <p>{averageRateByUser[0].toFixed(1)}</p>
+            </div>
+
+            <div>15 Helpful votes</div>
+          </div>
+        </CardFooter>
+      </Card>
     </>
   );
 };

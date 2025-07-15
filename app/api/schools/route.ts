@@ -9,7 +9,11 @@ export async function GET() {
         createdAt: "desc",
       },
       include: {
-        dorms: true,
+        dorms: {
+          include: {
+            reviews: true,
+          },
+        },
       },
     });
 

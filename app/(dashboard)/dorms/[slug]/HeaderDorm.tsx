@@ -9,10 +9,14 @@ import Image from "next/image";
 import { Rating } from "react-simple-star-rating";
 import { useFetchSchool } from "@/hooks/useSchool";
 import { useParams } from "next/navigation";
-import { School } from "@prisma/client";
+import { Dorm, Review, School } from "@prisma/client";
 import BackToAllSchools from "@/components/BackToAllSchools";
 
-const DormPage = ({ school }: { school: School }) => {
+const DormPage = ({
+  school,
+}: {
+  school: School & { dorms: (Dorm & { reviews: Review[] })[] };
+}) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -48,21 +52,9 @@ const DormPage = ({ school }: { school: School }) => {
               <span>
                 <Users className="text-gray-600" size={20} />
               </span>{" "}
-              433 Dorm Reviews
+              {school.dorms.reduce((acc, dorm) => acc + dorm.reviews.length, 0)}{" "}
+              Dorm Reviews Found
             </p>
-            <div className="pb-1 flex items-center ">
-              {isMounted && (
-                <Rating
-                  initialValue={4}
-                  readonly={true}
-                  size={20}
-                  SVGstyle={{
-                    display: "inline-block",
-                  }}
-                  className=""
-                />
-              )}
-            </div>
           </div>
 
           <div className="flex items-center gap-4 text-sm">

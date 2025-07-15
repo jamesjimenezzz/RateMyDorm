@@ -8,16 +8,18 @@ import placeholder from "@/public/placeholder.svg";
 import Image from "next/image";
 import { Rating } from "react-simple-star-rating";
 import DormsBackToUniv from "@/components/DormsBackToUniv";
-import { Dorm, School } from "@prisma/client";
+import { Dorm, Review, School } from "@prisma/client";
 import Link from "next/link";
+import { calculateRatings } from "@/lib/calculateRatings";
 
 interface HeaderReviewProps {
   school: School;
-  dorm: Dorm;
+  dorm: Dorm & { reviews: Review[] };
 }
 
 const DormPage = ({ school, dorm }: HeaderReviewProps) => {
   const [isMounted, setIsMounted] = useState(false);
+  const { overallRating } = calculateRatings(dorm?.reviews);
 
   useEffect(() => {
     setIsMounted(true);
@@ -39,7 +41,9 @@ const DormPage = ({ school, dorm }: HeaderReviewProps) => {
             <h1 className="text-4xl font-bold">{dorm.name}</h1>
             <span className="flex items-center bg-gray-100 rounded-xl px-2.5 py-1 gap-2">
               <Star className="fill-yellow-400 text-yellow-400" size={15} />
-              <p className="text-xs font-semibold">4.5</p>
+              <p className="text-xs font-semibold">
+                {overallRating.toFixed(1)}
+              </p>
             </span>
           </div>
           <p className="text-muted-foreground flex items-center gap-2">

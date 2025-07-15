@@ -25,7 +25,7 @@ import { Award } from "lucide-react";
 import { useParams } from "next/navigation";
 import placeholder2 from "@/public/placeholder2.png";
 import Dorms from "./Dorms";
-import { School } from "@prisma/client";
+import { School, Review } from "@prisma/client";
 import { Dorm } from "@prisma/client";
 
 const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
@@ -50,7 +50,7 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
         </div>
         <div className="grid grid-cols-3 gap-5 py-10">
           {school?.dorms?.length > 0 ? (
-            school?.dorms?.map((dorm: Dorm) => (
+            school?.dorms?.map((dorm: Dorm & { reviews: Review[] }) => (
               <Dorms key={dorm.id} dorm={dorm} />
             ))
           ) : (

@@ -14,7 +14,7 @@ const ReviewsPage = () => {
   const { data: school } = useFetchSchool(schoolSlug as string);
   const { data: dorm } = useFetchDorm(dormSlug as string);
 
-  if (!school) {
+  if (!school || !dorm) {
     return notFound();
   }
 
@@ -23,7 +23,7 @@ const ReviewsPage = () => {
       <div className="max-w-7xl mx-auto">
         <HeaderReview school={school} dorm={dorm} />
       </div>
-      <HeroReview />
+      <HeroReview dorm={dorm} />
     </>
   );
 };

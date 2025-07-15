@@ -14,6 +14,7 @@ export async function GET(
       },
       include: {
         school: true,
+        reviews: true,
       },
     });
 

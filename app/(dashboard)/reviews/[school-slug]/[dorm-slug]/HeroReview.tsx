@@ -15,15 +15,38 @@ import { Link, SquareArrowOutUpRight, Star } from "lucide-react";
 import LabelForm from "@/components/LabelForm";
 import { Button } from "@/components/ui/button";
 import Review from "./Review";
+import { Dorm, Review as ReviewType } from "@prisma/client";
+import { calculateRatings } from "@/lib/calculateRatings";
 
-const HeroReview = () => {
+interface Props {
+  dorm: Dorm & { reviews: ReviewType[] };
+}
+
+const HeroReview = ({ dorm }: Props) => {
+  const {
+    overallCleanliness,
+    overallNoiseLevel,
+    overallLocation,
+    overallAmenities,
+    averageRateByUser,
+    overallRating,
+  } = calculateRatings(dorm.reviews);
+
+  const progressBar = [5, 4, 3, 2, 1].map((star) => {
+    return {
+      star: star,
+      count: averageRateByUser.filter((rate) => Math.round(rate) === star)
+        .length,
+    };
+  });
+
   return (
     <div className="bg-[#f9fafb] py-15 w-full">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col gap-2 justify-center items-center text-center">
           <h1 className="text-3xl font-bold">Student Reviews</h1>
           <p className="text-gray-500">
-            Real experiences from students who lived in Warren Towers
+            Real experiences from students who lived in {dorm.name}
           </p>
         </div>
 
@@ -31,32 +54,40 @@ const HeroReview = () => {
           <div className="flex flex-col sticky top-12 self-start gap-7">
             <Card>
               <CardHeader className="text-center">
-                <CardTitle className="font-bold text-3xl">4.5</CardTitle>
+                <CardTitle className="font-bold text-3xl">
+                  {overallRating.toFixed(1)}
+                </CardTitle>
                 <Rating
                   SVGstyle={{
                     display: "inline-block",
                   }}
-                  initialValue={4.5}
+                  initialValue={overallRating}
+                  allowFraction
                   size={25}
                   readonly
                 />
-                <p className="text-sm text-gray-500">Based on 100 reviews</p>
+                <p className="text-sm text-gray-500">
+                  Based on {dorm.reviews.length} reviews
+                </p>
               </CardHeader>
               <CardContent className="flex flex-col gap-2">
-                {Array.from({ length: 5 }).map((_, index) => (
+                {progressBar.map((progress) => (
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2 w-full flex-1">
                       <div className="flex items-center gap-0.5">
-                        <p className="text-sm">{5 - index}</p>
+                        <p className="text-sm">{progress.star}</p>
                         <Star
                           className="fill-yellow-500 text-yellow-500"
                           size={12}
                         />
                       </div>
-                      <Progress className="h-2 max-w-75" value={50} />
+                      <Progress
+                        className="h-2 max-w-75"
+                        value={(progress.count / dorm.reviews.length) * 100}
+                      />
                     </div>
 
-                    <p className="text-sm">1</p>
+                    <p className="text-sm">{progress.count}</p>
                   </div>
                 ))}
               </CardContent>
@@ -79,17 +110,19 @@ const HeroReview = () => {
                       SVGstyle={{
                         display: "inline-block",
                       }}
-                      initialValue={4}
+                      initialValue={overallCleanliness}
                       size={17}
                       readonly
                     />
-                    <LabelForm className="pt-0.5">4.5</LabelForm>
+                    <LabelForm className="pt-0.5">
+                      {overallCleanliness.toFixed(1)}
+                    </LabelForm>
                   </div>
                 </div>
 
                 <div className="flex items-center">
                   <div className="flex-1">
-                    <LabelForm>Cleanliness</LabelForm>
+                    <LabelForm>Noise Level</LabelForm>
                   </div>
 
                   <div className="flex pb-1 items-center gap-1.5">
@@ -97,17 +130,19 @@ const HeroReview = () => {
                       SVGstyle={{
                         display: "inline-block",
                       }}
-                      initialValue={4}
+                      initialValue={overallNoiseLevel}
                       size={17}
                       readonly
                     />
-                    <LabelForm className="pt-0.5">4.5</LabelForm>
+                    <LabelForm className="pt-0.5">
+                      {overallNoiseLevel.toFixed(1)}
+                    </LabelForm>
                   </div>
                 </div>
 
                 <div className="flex items-center">
                   <div className="flex-1">
-                    <LabelForm>Cleanliness</LabelForm>
+                    <LabelForm>Location</LabelForm>
                   </div>
 
                   <div className="flex pb-1 items-center gap-1.5">
@@ -115,17 +150,19 @@ const HeroReview = () => {
                       SVGstyle={{
                         display: "inline-block",
                       }}
-                      initialValue={4}
+                      initialValue={overallLocation}
                       size={17}
                       readonly
                     />
-                    <LabelForm className="pt-0.5">4.5</LabelForm>
+                    <LabelForm className="pt-0.5">
+                      {overallLocation.toFixed(1)}
+                    </LabelForm>
                   </div>
                 </div>
 
                 <div className="flex items-center">
                   <div className="flex-1">
-                    <LabelForm>Cleanliness</LabelForm>
+                    <LabelForm>Amenities</LabelForm>
                   </div>
 
                   <div className="flex pb-1 items-center gap-1.5">
@@ -133,11 +170,13 @@ const HeroReview = () => {
                       SVGstyle={{
                         display: "inline-block",
                       }}
-                      initialValue={4}
+                      initialValue={overallAmenities}
                       size={17}
                       readonly
                     />
-                    <LabelForm className="pt-0.5">4.5</LabelForm>
+                    <LabelForm className="pt-0.5">
+                      {overallAmenities.toFixed(1)}
+                    </LabelForm>
                   </div>
                 </div>
               </CardContent>
@@ -171,7 +210,9 @@ const HeroReview = () => {
           </div>
 
           <div className="w-full col-span-2">
-            <Review />
+            {dorm?.reviews.map((review) => (
+              <Review key={review.id} review={review} />
+            ))}
             <div className="flex justify-center pt-5">
               <Button className="px-10 cursor-pointer">See more</Button>
             </div>

@@ -13,7 +13,11 @@ export async function GET(
         slug: slug,
       },
       include: {
-        dorms: true,
+        dorms: {
+          include: {
+            reviews: true,
+          },
+        },
       },
     });
 

@@ -18,10 +18,13 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import placeholder2 from "@/public/placeholder2.png";
 import { useParams } from "next/navigation";
-import { Dorm } from "@prisma/client";
+import { Dorm, Review } from "@prisma/client";
+import { calculateRatings } from "@/lib/calculateRatings";
 
-const Dorms = ({ dorm }: { dorm: Dorm }) => {
+const Dorms = ({ dorm }: { dorm: Dorm & { reviews: Review[] } }) => {
   const { slug } = useParams();
+
+  const { overallRating } = calculateRatings(dorm.reviews);
 
   return (
     <Card className="p-0 gap-0 overflow-hidden max-w-[400px]">
@@ -35,7 +38,7 @@ const Dorms = ({ dorm }: { dorm: Dorm }) => {
         <div className="absolute top-3 right-3 flex items-center gap-1">
           <div className="flex bg-gray-100 rounded-xl px-2.5 py-1 items-center gap-1.5">
             <Star className="fill-gray-500 text-gray-500" size={13} />
-            <p className="text-sm font-[500]">4.7</p>
+            <p className="text-sm font-[500]">{overallRating.toFixed(1)}</p>
           </div>
         </div>
         <div className="absolute bottom-3 left-3 flex items-center gap-1">
@@ -55,7 +58,7 @@ const Dorms = ({ dorm }: { dorm: Dorm }) => {
           </div>
           <div className="flex items-center gap-2">
             <MessageSquareMore size={15} />
-            <p>78 reviews</p>
+            <p>{dorm.reviews.length} reviews</p>
           </div>
         </CardDescription>
         <CardDescription className="text-sm w-full  flex flex-col gap-2 text-muted-foreground">
@@ -68,13 +71,18 @@ const Dorms = ({ dorm }: { dorm: Dorm }) => {
                 SVGstyle={{
                   display: "inline-block",
                 }}
-                initialValue={4}
+                initialValue={overallRating}
+                allowFraction
+                readonly
                 size={15}
               />
             </div>
           </div>
           <div>
-            <Progress value={80} className="w-full h-1.5 [&>div]:bg-gray-600" />
+            <Progress
+              value={(overallRating / 5) * 100}
+              className="w-full h-1.5 [&>div]:bg-gray-600"
+            />
           </div>
           <div className="flex gap-2 pt-5 w-full  justify-center ">
             <Link
