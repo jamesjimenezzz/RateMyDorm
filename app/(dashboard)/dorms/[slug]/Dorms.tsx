@@ -85,12 +85,14 @@ const Dorms = ({ dorm }: { dorm: Dorm }) => {
                 Read Reviews
               </Button>
             </Link>
-            <Button
-              variant={"outline"}
-              className="text-xs cursor-pointer text-black py-0 h-8"
-            >
-              Write a Review
-            </Button>
+            <Link href={`/add-reviews/${dorm.slug}`}>
+              <Button
+                variant={"outline"}
+                className="text-xs cursor-pointer text-black py-0 h-8"
+              >
+                Write a Review
+              </Button>
+            </Link>
           </div>
         </CardDescription>
       </CardContent>

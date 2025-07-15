@@ -20,7 +20,10 @@ const AddDormsPage = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const pages = [<FirstPage school={school} />, <SecondPage />];
+  const pages = [
+    <FirstPage school={school} />,
+    <SecondPage dormName={undefined} />,
+  ];
 
   const displayPage = pages[page];
 

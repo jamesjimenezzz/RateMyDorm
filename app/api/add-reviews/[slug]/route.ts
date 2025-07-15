@@ -28,8 +28,14 @@ export async function POST(
   req: Request,
   { params }: { params: { slug: string } }
 ) {
-  const { slug } = await params;
+  const { slug } = params;
+  const body = await req.json();
+
   const {
+    roomType,
+    yearLived,
+    photos,
+    semester,
     cleanliness,
     noiseLevel,
     location,
@@ -42,7 +48,7 @@ export async function POST(
     isAnonymous,
     classYear,
     userName,
-  } = await req.json();
+  } = body;
 
   const { userId } = await auth();
 
@@ -50,9 +56,23 @@ export async function POST(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const checkUser = await prisma.user.findUnique({
+    where: {
+      clerkId: userId,
+    },
+  });
+
+  if (!checkUser) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  }
+
   try {
     const addReview = await prisma.review.create({
       data: {
+        roomType,
+        yearLived,
+        photoUrl: photos,
+        semester,
         cleanlinessRate: cleanliness,
         noiseLevelRate: noiseLevel,
         locationRate: location,
@@ -66,8 +86,15 @@ export async function POST(
         classYear,
         userName: userName,
         dormSlug: slug,
-        userId: userId,
+        userId: checkUser.id,
       },
     });
-  } catch (error) {}
+
+    return NextResponse.json({ addReview });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to add review" },
+      { status: 500 }
+    );
+  }
 }

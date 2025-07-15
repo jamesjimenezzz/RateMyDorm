@@ -21,7 +21,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Image from "next/image";
 import { useFormContext, Controller } from "react-hook-form";
 
-const AddDorms = () => {
+const AddDorms = ({ dormName }: { dormName: string | undefined }) => {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
 
@@ -59,7 +59,9 @@ const AddDorms = () => {
   return (
     <div className=" py-10 px-5 ">
       <div className="flex justify-center items-center text-center flex-col gap-2">
-        <h1 className="text-3xl font-bold">Write a Dorm Review</h1>
+        <h1 className="text-3xl font-bold">
+          Write a Dorm Review {dormName ? `to ${dormName}` : ""}
+        </h1>
         <p className="text-muted-foreground text-lg">
           Share your experience at Boston University
         </p>

@@ -77,10 +77,6 @@ export async function POST(
       prisma.dorm.create({
         data: {
           name: dormName,
-          roomType,
-          yearLived,
-          photoUrl: photos,
-          semester,
           schoolSlug: slug,
           slug: dormSlug,
           addedById: checkUser.id,
@@ -89,6 +85,10 @@ export async function POST(
 
       prisma.review.create({
         data: {
+          roomType,
+          yearLived,
+          photoUrl: photos,
+          semester,
           cleanlinessRate: cleanliness,
           noiseLevelRate: noiseLevel,
           locationRate: location,

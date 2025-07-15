@@ -12,6 +12,9 @@ export async function GET(
       where: {
         slug: slug,
       },
+      include: {
+        school: true,
+      },
     });
 
     return NextResponse.json(dorm);

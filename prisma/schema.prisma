@@ -110,10 +110,6 @@ enum Recommendation {
 model Dorm {
   id String @id @default(uuid())
   name String
-  roomType RoomType
-  yearLived YearLived
-  semester Semester
-photoUrl String[] @default([])
   slug String? @unique
   schoolSlug String
   school School @relation(fields: [schoolSlug], references: [slug] )
@@ -127,6 +123,10 @@ photoUrl String[] @default([])
 
 model Review {
   id String @id @default(uuid())
+  roomType RoomType
+  yearLived YearLived
+  semester Semester
+photoUrl String[] @default([])
     cleanlinessRate Int
   noiseLevelRate Int
   locationRate Int
