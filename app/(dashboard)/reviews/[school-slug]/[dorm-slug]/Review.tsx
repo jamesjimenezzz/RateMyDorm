@@ -32,11 +32,10 @@ const Review = ({ review }: { review: ReviewType }) => {
                   }}
                   initialValue={averageRateByUser[0]}
                   size={20}
-                  allowFraction
                   readonly
                 />
                 <p className="font-semibold pt-0.5">
-                  {averageRateByUser[0].toFixed(1)} / 5
+                  {Math.round(averageRateByUser[0])} / 5
                 </p>
               </div>
 
@@ -71,8 +70,6 @@ const Review = ({ review }: { review: ReviewType }) => {
               <p>{review.semester}</p>
               <p>{averageRateByUser[0].toFixed(1)}</p>
             </div>
-
-            <div>15 Helpful votes</div>
           </div>
         </CardFooter>
       </Card>

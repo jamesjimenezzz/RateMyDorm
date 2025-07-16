@@ -20,8 +20,13 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Image from "next/image";
 import { useFormContext, Controller } from "react-hook-form";
+import BackToSpecificSchool from "@/components/BackToSpecificSchool";
+import { useFetchSchool } from "@/hooks/useSchool";
+import { useParams } from "next/navigation";
+import { useFetchDorm } from "@/hooks/useDorm";
 
 const AddDorms = ({ dormName }: { dormName: string | undefined }) => {
+  const { slug } = useParams();
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
 
@@ -35,6 +40,9 @@ const AddDorms = ({ dormName }: { dormName: string | undefined }) => {
 
   const [isMounted, setIsMounted] = useState(false);
   const [anonymous, setAnonymous] = useState(false);
+
+  const { data: school } = useFetchSchool(slug as string);
+  const { data: dorm } = useFetchDorm(slug as string);
 
   useEffect(() => {
     setIsMounted(true);
@@ -67,7 +75,14 @@ const AddDorms = ({ dormName }: { dormName: string | undefined }) => {
         </p>
       </div>
       <div className="pt-10">
-        <BackToHome />
+        <BackToSpecificSchool
+          schoolSlug={
+            (school?.slug as string) || (dorm?.school?.slug as string)
+          }
+          dormSchool={
+            (school?.name as string) || (dorm?.school?.name as string)
+          }
+        />
       </div>
       <div className="grid gap-12">
         <Card className="">

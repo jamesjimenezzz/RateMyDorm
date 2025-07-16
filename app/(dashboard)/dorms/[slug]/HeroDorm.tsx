@@ -50,8 +50,11 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
         </div>
         <div className="grid grid-cols-3 gap-5 py-10">
           {school?.dorms?.length > 0 ? (
-            school?.dorms?.map((dorm: Dorm & { reviews: Review[] }) => (
-              <Dorms key={dorm.id} dorm={dorm} />
+            school?.dorms?.map((dorm) => (
+              <Dorms
+                key={dorm.id}
+                dorm={dorm as Dorm & { reviews: Review[] }}
+              />
             ))
           ) : (
             <div className="flex justify-center items-center h-full w-full">

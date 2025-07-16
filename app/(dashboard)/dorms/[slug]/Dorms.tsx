@@ -42,11 +42,7 @@ const Dorms = ({ dorm }: { dorm: Dorm & { reviews: Review[] } }) => {
           </div>
         </div>
         <div className="absolute bottom-3 left-3 flex items-center gap-1">
-          <div className=" bg-gray-100 rounded-xl px-2.5 py-1 items-center gap-1.5">
-            <p className="text-xs text-gray-600  font-semibold">
-              {dorm.roomType}
-            </p>
-          </div>
+          <div className=" bg-gray-100 rounded-xl px-2.5 py-1 items-center gap-1.5"></div>
         </div>
       </div>
       <CardContent className="p-0 pb-5 flex flex-col gap-1.5 pt-5 px-3">

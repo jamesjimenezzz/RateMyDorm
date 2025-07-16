@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Rating } from "react-simple-star-rating";
 import { Progress } from "@/components/ui/progress";
-import { Link, SquareArrowOutUpRight, Star } from "lucide-react";
+import { SquareArrowOutUpRight, Star } from "lucide-react";
+import Link from "next/link";
 import LabelForm from "@/components/LabelForm";
 import { Button } from "@/components/ui/button";
 import Review from "./Review";
@@ -51,7 +52,7 @@ const HeroReview = ({ dorm }: Props) => {
         </div>
 
         <div className="grid grid-cols-3 gap-4 pt-15">
-          <div className="flex flex-col sticky top-12 self-start gap-7">
+          <div className="flex flex-col sticky top-20 self-start gap-7">
             <Card>
               <CardHeader className="text-center">
                 <CardTitle className="font-bold text-3xl">
@@ -182,31 +183,19 @@ const HeroReview = ({ dorm }: Props) => {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="flex justify-center items-center gap-15 text-center">
-                <div className="">
-                  <h1 className="font-bold text-2xl">67%</h1>
-                  <p className="text-xs text-gray-500">Recommended</p>
+            <Link href={`/add-reviews/${dorm.slug}`}>
+              <div className=" hover:bg-gray-100 transition-all duration-300 hover:border-gray-600  border-2 border-gray-300 border-dashed  rounded-lg p-10 cursor-pointer">
+                <div className="flex flex-col gap-2   text-center items-center justify-centers">
+                  <div className="rounded-full bg-gray-200 p-4">
+                    <SquareArrowOutUpRight size={25} />
+                  </div>
+                  <h1 className="text-xl font-bold">Share your experience</h1>
+                  <p className="text-sm max-w-[250px] text-muted-foreground">
+                    Help other students by adding a review that's not listed
+                  </p>
                 </div>
-
-                <div className="">
-                  <h1 className="font-bold text-2xl">35%</h1>
-                  <p className="text-xs text-gray-500">Helpful votes</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className=" hover:bg-gray-100 transition-all duration-300 hover:border-gray-600  border-2 border-gray-300 border-dashed  rounded-lg p-10 cursor-pointer">
-              <div className="flex flex-col gap-2   text-center items-center justify-centers">
-                <div className="rounded-full bg-gray-200 p-4">
-                  <SquareArrowOutUpRight size={25} />
-                </div>
-                <h1 className="text-xl font-bold">Share your experience</h1>
-                <p className="text-sm max-w-[250px] text-muted-foreground">
-                  Help other students by adding a review that's not listed
-                </p>
               </div>
-            </div>
+            </Link>
           </div>
 
           <div className="w-full col-span-2">

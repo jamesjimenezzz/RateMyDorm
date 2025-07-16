@@ -22,6 +22,7 @@ import Image from "next/image";
 import { Trash } from "lucide-react";
 import { uploadCloudinary } from "@/lib/uploadCloudinary";
 import { useAddSchool } from "@/hooks/useSchool";
+import BackToAllSchools from "@/components/BackToAllSchools";
 
 const AddSchool = () => {
   const [picture, setPicture] = useState<File | string | null>(null);
@@ -94,7 +95,7 @@ const AddSchool = () => {
         </p>
       </div>
       <div className="my-7">
-        <BackToHome />
+        <BackToAllSchools />
       </div>
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>

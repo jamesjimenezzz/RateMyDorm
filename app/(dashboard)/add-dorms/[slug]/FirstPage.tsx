@@ -5,12 +5,19 @@ import BackToHome from "@/components/BackToHome";
 import LabelForm from "@/components/LabelForm";
 import { useFormContext } from "react-hook-form";
 import { School } from "@prisma/client";
+import BackToSpecificSchool from "@/components/BackToSpecificSchool";
+import { useParams } from "next/navigation";
+import { useFetchSchool } from "@/hooks/useSchool";
 
 const FirstPage = ({ school }: { school: School }) => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
+
+  const { slug } = useParams();
+
+  const { data: schoolLink } = useFetchSchool(slug as string);
 
   return (
     <div className="pt-20  items-center mx-auto overflow-hidden flex-1   justify-center text-center">
@@ -19,7 +26,10 @@ const FirstPage = ({ school }: { school: School }) => {
       </div>
 
       <div className="pt-5">
-        <BackToHome />
+        <BackToSpecificSchool
+          schoolSlug={schoolLink.slug as string}
+          dormSchool={schoolLink.name as string}
+        />
       </div>
 
       <div className="flex flex-col  text-start">
