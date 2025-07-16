@@ -24,9 +24,13 @@ import BackToSpecificSchool from "@/components/BackToSpecificSchool";
 import { useFetchSchool } from "@/hooks/useSchool";
 import { useParams } from "next/navigation";
 import { useFetchDorm } from "@/hooks/useDorm";
+import { Dorm } from "@prisma/client";
 
-const AddDorms = ({ dormName }: { dormName: string | undefined }) => {
-  const { slug } = useParams();
+interface Props {
+  dormData: Dorm;
+}
+
+const AddDorms = ({ dormData }: Props) => {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
 
@@ -41,8 +45,13 @@ const AddDorms = ({ dormName }: { dormName: string | undefined }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [anonymous, setAnonymous] = useState(false);
 
-  const { data: school } = useFetchSchool(slug as string);
-  const { data: dorm } = useFetchDorm(slug as string);
+  const { slug } = useParams();
+  const { data: school } = useFetchSchool(
+    (dormData?.schoolSlug as string) || (slug as string)
+  );
+  const { data: dorm } = useFetchDorm(
+    (dormData?.slug as string) || (slug as string)
+  );
 
   useEffect(() => {
     setIsMounted(true);
@@ -68,7 +77,7 @@ const AddDorms = ({ dormName }: { dormName: string | undefined }) => {
     <div className=" py-10 px-5 ">
       <div className="flex justify-center items-center text-center flex-col gap-2">
         <h1 className="text-3xl font-bold">
-          Write a Dorm Review {dormName ? `to ${dormName}` : ""}
+          Write a Dorm Review {dormData ? `to ${dormData.name}` : ""}
         </h1>
         <p className="text-muted-foreground text-lg">
           Share your experience at Boston University

@@ -5,7 +5,7 @@ export async function GET(
   req: Request,
   { params }: { params: { slug: string } }
 ) {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const dorm = await prisma.dorm.findUnique({

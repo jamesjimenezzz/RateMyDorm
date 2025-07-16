@@ -16,12 +16,6 @@ const AddReviews = () => {
   const { slug } = useParams();
   const { data: dorm, isFetching } = useFetchDorm(slug as string);
   const router = useRouter();
-
-  if (isFetching) return <Spinner />;
-  if (!dorm) {
-    return notFound();
-  }
-
   const form = useForm<AddReviewSchemaType>({
     resolver: zodResolver(addReviewSchema),
     mode: "onChange",
@@ -46,6 +40,11 @@ const AddReviews = () => {
   });
 
   const { mutate, isPending } = useReview();
+
+  if (isFetching) return <Spinner />;
+  if (!dorm) {
+    return notFound();
+  }
 
   const onSubmit = async (data: AddReviewSchemaType) => {
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
@@ -76,7 +75,7 @@ const AddReviews = () => {
     <div className="max-w-3xl mx-auto">
       <FormProvider {...form} key={formKey}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <AddDorms dormName={dorm?.name} />
+          <AddDorms dormData={dorm} />
 
           <div className="flex px-5">
             <Button type="submit" className="flex-1 " disabled={isPending}>

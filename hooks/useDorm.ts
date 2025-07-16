@@ -11,5 +11,6 @@ export function useFetchDorm(slug: string) {
   return useQuery({
     queryKey: ["dorm", slug],
     queryFn: () => fetchDorm(slug),
+    staleTime: 1000 * 60 * 5,
   });
 }

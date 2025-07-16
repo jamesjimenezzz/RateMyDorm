@@ -11,6 +11,7 @@ import { FileSymlink } from "lucide-react";
 import { notFound, useParams } from "next/navigation";
 import { useFetchSchool } from "@/hooks/useSchool";
 import { useAddDorm } from "@/hooks/useDorm";
+import { Dorm } from "@prisma/client";
 
 const AddDormsPage = () => {
   const { slug } = useParams();
@@ -22,7 +23,7 @@ const AddDormsPage = () => {
 
   const pages = [
     <FirstPage school={school} />,
-    <SecondPage dormName={undefined} />,
+    <SecondPage dormData={undefined as unknown as Dorm} />,
   ];
 
   const displayPage = pages[page];
