@@ -1,31 +1,45 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import HeaderReview from "./HeaderReview";
-import HeroReview from "./HeroReview";
-import { notFound, useParams } from "next/navigation";
-import { useFetchSchool } from "@/hooks/useSchool";
-import { useFetchDorm } from "@/hooks/useDorm";
+import React from "react";
+import ReviewsPage from "./ReviewPageClient";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { fetchSchool } from "@/lib/server/fetchSchool";
+import { fetchDorm } from "@/lib/server/fetchDorm";
+import { fetchReviews } from "@/lib/server/fetchReviews";
 
-const ReviewsPage = () => {
-  const params = useParams();
-  const schoolSlug = params["school-slug"];
-  const dormSlug = params["dorm-slug"];
+const ReviewMainPage = async ({
+  params,
+}: {
+  params: { "school-slug": string; "dorm-slug": string };
+}) => {
+  const queryClient = new QueryClient();
 
-  const { data: school } = useFetchSchool(schoolSlug as string);
-  const { data: dorm } = useFetchDorm(dormSlug as string);
+  const { "school-slug": schoolSlug, "dorm-slug": dormSlug } = await params;
 
-  if (!school || !dorm) {
-    return notFound();
-  }
+  await queryClient.prefetchQuery({
+    queryKey: ["school", schoolSlug],
+    queryFn: () => fetchSchool(schoolSlug),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["dorm", dormSlug],
+    queryFn: () => fetchDorm(dormSlug),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["reviews", dormSlug],
+    queryFn: () => fetchReviews(dormSlug),
+  });
 
   return (
     <>
-      <div className="max-w-7xl mx-auto">
-        <HeaderReview school={school} dorm={dorm} />
-      </div>
-      <HeroReview dorm={dorm} />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <ReviewsPage schoolSlug={schoolSlug} dormSlug={dormSlug} />
+      </HydrationBoundary>
     </>
   );
 };
 
-export default ReviewsPage;
+export default ReviewMainPage;

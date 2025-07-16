@@ -9,12 +9,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useReview } from "@/hooks/useReview";
 import { uploadCloudinary } from "@/lib/uploadCloudinary";
+import Spinner from "@/components/Spinner";
 
 const AddReviews = () => {
   const [formKey, setFormKey] = useState(0);
   const { slug } = useParams();
   const { data: dorm, isFetching } = useFetchDorm(slug as string);
   const router = useRouter();
+
+  if (isFetching) return <Spinner />;
   if (!dorm) {
     return notFound();
   }

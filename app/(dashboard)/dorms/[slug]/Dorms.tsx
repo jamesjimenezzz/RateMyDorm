@@ -17,13 +17,14 @@ import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import placeholder2 from "@/public/placeholder2.png";
-import { useParams } from "next/navigation";
-import { Dorm, Review } from "@prisma/client";
+import { Dorm, Review, School } from "@prisma/client";
 import { calculateRatings } from "@/lib/calculateRatings";
 
-const Dorms = ({ dorm }: { dorm: Dorm & { reviews: Review[] } }) => {
-  const { slug } = useParams();
-
+const Dorms = ({
+  dorm,
+}: {
+  dorm: Dorm & { reviews: Review[] } & { school: School };
+}) => {
   const { overallRating } = calculateRatings(dorm.reviews);
 
   return (
@@ -83,7 +84,7 @@ const Dorms = ({ dorm }: { dorm: Dorm & { reviews: Review[] } }) => {
           <div className="flex gap-2 pt-5 w-full  justify-center ">
             <Link
               className="w-full flex-1/4 "
-              href={`/reviews/${slug}/${dorm.slug}`}
+              href={`/reviews/${dorm.schoolSlug}/${dorm.slug}`}
             >
               <Button className="text-xs py-0 h-8   cursor-pointer w-full">
                 Read Reviews

@@ -36,14 +36,14 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
           <h1 className="text-3xl font-semibold">
             Rate Dorms at{" "}
             <span className="text-gray-800 font-bold  border-gray-400 border-b-2">
-              {school.name}
+              {school?.name}
             </span>
           </h1>
           <p>
             Share your experience and read honest reviews from fellow students
           </p>
           <div className="text-muted-foreground flex gap-5">
-            <p>{school.dorms.length} residence halls</p>
+            <p>{school?.dorms?.length} residence halls</p>
             <span>•</span>
             <p>168 total reviews</p>
           </div>
@@ -53,7 +53,7 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
             school?.dorms?.map((dorm) => (
               <Dorms
                 key={dorm.id}
-                dorm={dorm as Dorm & { reviews: Review[] }}
+                dorm={dorm as Dorm & { reviews: Review[] } & { school: School }}
               />
             ))
           ) : (
@@ -62,7 +62,7 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
             </div>
           )}
         </div>
-        {school.dorms.length > 6 && (
+        {school?.dorms?.length > 6 && (
           <div className="flex justify-center pb-10 ">
             <Button
               variant={"outline"}
@@ -74,7 +74,7 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
         )}
 
         <div className="py-10 max-w-lg mx-auto hover:bg-gray-100 transition-all duration-300 hover:border-gray-600  border-2 border-gray-300 border-dashed  rounded-lg bg-white w-full">
-          <Link href={`/add-dorms/${school.slug}`}>
+          <Link href={`/add-dorms/${school?.slug}`}>
             <div className="flex flex-col gap-2   text-center items-center justify-centers">
               <div className="rounded-full bg-gray-200 p-4">
                 <SquareArrowOutUpRight size={25} />

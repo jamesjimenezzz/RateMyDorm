@@ -7,8 +7,6 @@ import { Button } from "@/components/ui/button";
 import placeholder from "@/public/placeholder.svg";
 import Image from "next/image";
 import { Rating } from "react-simple-star-rating";
-import { useFetchSchool } from "@/hooks/useSchool";
-import { useParams } from "next/navigation";
 import { Dorm, Review, School } from "@prisma/client";
 import BackToAllSchools from "@/components/BackToAllSchools";
 
@@ -41,7 +39,7 @@ const DormPage = ({
             <span>
               <MapPin size={16} />
             </span>{" "}
-            {school.city}, {school.state}
+            {school?.city}, {school?.state}
           </p>
           <p className="text-gray-600 text-lg mb-2">
             Boston University is a leading private research university with two
@@ -52,7 +50,10 @@ const DormPage = ({
               <span>
                 <Users className="text-gray-600" size={20} />
               </span>{" "}
-              {school.dorms.reduce((acc, dorm) => acc + dorm.reviews.length, 0)}{" "}
+              {school?.dorms?.reduce(
+                (acc, dorm) => acc + dorm.reviews.length,
+                0
+              )}{" "}
               Dorm Reviews Found
             </p>
           </div>
@@ -66,7 +67,7 @@ const DormPage = ({
         </div>
         <div className="h-80 w-full">
           <Image
-            className="h-full w-full object-cover rounded-lg"
+            className="h-full w-full object-cover rounded-lg priority"
             src={school?.picture[0] || placeholder}
             alt="dorm"
             width={800}

@@ -1,9 +1,4 @@
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchSchool, fetchSchools } from "@/lib/api/school";
 import { addSchool } from "@/lib/api/school";
 import { SchoolPassData } from "@/types";
@@ -28,9 +23,9 @@ export function useAddSchool() {
 }
 
 export function useFetchSchool(slug: string) {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["school", slug],
     queryFn: () => fetchSchool(slug),
-    retry: false,
+    staleTime: 1000 * 60 * 5,
   });
 }

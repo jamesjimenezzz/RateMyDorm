@@ -1,26 +1,29 @@
-"use client";
 import React from "react";
-import HeaderDorm from "./HeaderDorm";
-import HeroDorm from "./HeroDorm";
-import { useFetchSchool } from "@/hooks/useSchool";
-import { notFound, useParams } from "next/navigation";
+import DormPage from "./DormPageClient";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { fetchSchool } from "@/lib/server/fetchSchool";
 
-const DormPage = () => {
-  const { slug } = useParams();
-  const { data: school, isFetching } = useFetchSchool(slug as string);
+const MainDormPage = async ({ params }: { params: { slug: string } }) => {
+  const { slug } = params;
 
-  if (!school) {
-    return notFound();
-  }
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["school", slug],
+    queryFn: () => fetchSchool(slug),
+  });
 
   return (
     <>
-      <div className="max-w-7xl  mx-auto px-5">
-        <HeaderDorm school={school} />
-      </div>
-      <HeroDorm school={school} />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <DormPage slug={slug} />
+      </HydrationBoundary>
     </>
   );
 };
 
-export default DormPage;
+export default MainDormPage;

@@ -15,9 +15,5 @@ export default async function DashboardLayout({
     redirect("/sign-in");
   }
 
-  return (
-    <>
-      <Suspense fallback={<Spinner />}>{children}</Suspense>
-    </>
-  );
+  return <>{children}</>;
 }

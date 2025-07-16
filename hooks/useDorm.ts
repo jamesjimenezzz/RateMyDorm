@@ -1,5 +1,5 @@
 import { addDorm, fetchDorm } from "@/lib/api/dorms";
-import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 export function useAddDorm() {
   return useMutation({
@@ -8,7 +8,7 @@ export function useAddDorm() {
 }
 
 export function useFetchDorm(slug: string) {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["dorm", slug],
     queryFn: () => fetchDorm(slug),
   });

@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import {
   Card,
@@ -21,9 +20,10 @@ import { calculateRatings } from "@/lib/calculateRatings";
 
 interface Props {
   dorm: Dorm & { reviews: ReviewType[] };
+  reviews: ReviewType[];
 }
 
-const HeroReview = ({ dorm }: Props) => {
+const HeroReview = ({ dorm, reviews }: Props) => {
   const {
     overallCleanliness,
     overallNoiseLevel,
@@ -199,7 +199,7 @@ const HeroReview = ({ dorm }: Props) => {
           </div>
 
           <div className="w-full col-span-2">
-            {dorm?.reviews.map((review) => (
+            {reviews.map((review) => (
               <Review key={review.id} review={review} />
             ))}
             <div className="flex justify-center pt-5">
