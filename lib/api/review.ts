@@ -26,7 +26,7 @@ export const fetchReviews = async (
 ) => {
   try {
     const res = await fetch(
-      `/api/review/${slug}?page=${page}&limit=3${
+      `/api/review/${slug}?page=${page}&limit=8${
         rating ? `&rating=${rating}` : ""
       }`
     );

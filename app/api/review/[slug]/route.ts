@@ -9,8 +9,8 @@ export async function GET(
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get("page") || "0");
   const rating = searchParams.get("rating") || undefined;
-  const limit = parseInt(searchParams.get("limit") || "5");
-  const skip = page * limit;
+  const limit = parseInt(searchParams.get("limit") || "8");
+  const skip = (page - 1) * limit;
 
   try {
     const reviews = await prisma.review.findMany({
@@ -28,7 +28,10 @@ export async function GET(
       },
     });
 
-    return NextResponse.json(reviews);
+    return NextResponse.json({
+      reviews,
+      hasMore: reviews.length === limit,
+    });
   } catch (error) {
     return NextResponse.json(
       {

@@ -26,6 +26,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import Spinner from "@/components/Spinner";
 interface Props {
   dorm: Dorm & { reviews: ReviewType[] };
@@ -33,14 +42,13 @@ interface Props {
 }
 
 const HeroReview = ({ dorm, dormSlug }: Props) => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [rating, setRating] = useState<number | undefined>(undefined);
 
-  const { data: reviews, isLoading } = useFetchReviews(
-    dormSlug as string,
-    page,
-    rating
-  );
+  const { data, isLoading } = useFetchReviews(dormSlug as string, page, rating);
+
+  const reviews = data?.reviews;
+  const hasMore = data?.hasMore;
 
   if (isLoading) return <Spinner />;
 
@@ -239,7 +247,7 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                   } else {
                     setRating(Number(value));
                   }
-                  setPage(0);
+                  setPage(1);
                 }}
               >
                 <SelectTrigger className="w-[200px] text-sm">
@@ -256,16 +264,62 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                 </SelectContent>
               </Select>
             </div>
-            {reviews?.map((review: ReviewType) => (
-              <Review key={review.id} review={review} />
-            ))}
+            {reviews && reviews.length > 0 ? (
+              reviews?.map((review: ReviewType) => (
+                <Review key={review.id} review={review} />
+              ))
+            ) : (
+              <div className="flex justify-center items-center ">
+                <p className="text-gray-500">No reviews found</p>
+              </div>
+            )}
+
             <div className="flex justify-center pt-5">
-              <Button
-                onClick={() => setPage(page + 1)}
-                className="px-10 cursor-pointer"
-              >
-                See more
-              </Button>
+              <Pagination>
+                <PaginationContent>
+                  {page > 1 && (
+                    <>
+                      <PaginationItem>
+                        <PaginationPrevious
+                          onClick={() => setPage(page - 1)}
+                          href="#"
+                        />
+                      </PaginationItem>
+
+                      <PaginationItem>
+                        <PaginationLink
+                          onClick={() => setPage(page - 1)}
+                          href="#"
+                        >
+                          {page - 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    </>
+                  )}
+
+                  <PaginationItem>
+                    <PaginationLink href="#" isActive>
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                  {hasMore && (
+                    <>
+                      <PaginationItem>
+                        <PaginationLink href="#">{page + 1}</PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationEllipsis />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationNext
+                          onClick={() => setPage(page + 1)}
+                          href="#"
+                        />
+                      </PaginationItem>
+                    </>
+                  )}
+                </PaginationContent>
+              </Pagination>
             </div>
           </div>
         </div>
