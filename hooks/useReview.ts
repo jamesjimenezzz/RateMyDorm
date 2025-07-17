@@ -11,10 +11,14 @@ export const useReview = () => {
   });
 };
 
-export const useFetchReviews = (slug: string) => {
+export const useFetchReviews = (
+  slug: string,
+  page: number,
+  rating?: number
+) => {
   return useQuery({
-    queryKey: ["reviews", slug],
-    queryFn: () => fetchReviews(slug),
+    queryKey: ["reviews", slug, page, rating],
+    queryFn: () => fetchReviews(slug, page, rating),
     staleTime: 1000 * 60 * 5,
   });
 };

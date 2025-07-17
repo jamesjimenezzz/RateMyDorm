@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardAction,
@@ -17,13 +17,33 @@ import { Button } from "@/components/ui/button";
 import Review from "./Review";
 import { Dorm, Review as ReviewType } from "@prisma/client";
 import { calculateRatings } from "@/lib/calculateRatings";
-
+import { useFetchReviews } from "@/hooks/useReview";
+import { Funnel } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Spinner from "@/components/Spinner";
 interface Props {
   dorm: Dorm & { reviews: ReviewType[] };
-  reviews: ReviewType[];
+  dormSlug: string;
 }
 
-const HeroReview = ({ dorm, reviews }: Props) => {
+const HeroReview = ({ dorm, dormSlug }: Props) => {
+  const [page, setPage] = useState(0);
+  const [rating, setRating] = useState<number | undefined>(undefined);
+
+  const { data: reviews, isLoading } = useFetchReviews(
+    dormSlug as string,
+    page,
+    rating
+  );
+
+  if (isLoading) return <Spinner />;
+
   const {
     overallCleanliness,
     overallNoiseLevel,
@@ -40,6 +60,15 @@ const HeroReview = ({ dorm, reviews }: Props) => {
         .length,
     };
   });
+
+  const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    if (e.target.value === "all") {
+      setRating(undefined);
+    } else {
+      setRating(Number(e.target.value));
+    }
+  };
 
   return (
     <div className="bg-[#f9fafb] py-15 w-full">
@@ -199,11 +228,44 @@ const HeroReview = ({ dorm, reviews }: Props) => {
           </div>
 
           <div className="w-full col-span-2">
-            {reviews.map((review) => (
+            <div className="flex items-center gap-2 mx-2 my-5">
+              <Funnel className="text-gray-600" size={20} />
+              <Select
+                value={rating?.toString() ?? "all"}
+                defaultValue="all"
+                onValueChange={(value) => {
+                  if (value === "all") {
+                    setRating(undefined);
+                  } else {
+                    setRating(Number(value));
+                  }
+                  setPage(0);
+                }}
+              >
+                <SelectTrigger className="w-[200px] text-sm">
+                  <SelectValue placeholder="Theme" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Ratings</SelectItem>
+                  <SelectItem value="5">5 Stars</SelectItem>
+                  <SelectItem value="4">4 Stars</SelectItem>
+                  <SelectItem value="3">3 Stars</SelectItem>
+                  <SelectItem value="2">2 Stars</SelectItem>
+
+                  <SelectItem value="1">1 Star</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            {reviews?.map((review: ReviewType) => (
               <Review key={review.id} review={review} />
             ))}
             <div className="flex justify-center pt-5">
-              <Button className="px-10 cursor-pointer">See more</Button>
+              <Button
+                onClick={() => setPage(page + 1)}
+                className="px-10 cursor-pointer"
+              >
+                See more
+              </Button>
             </div>
           </div>
         </div>

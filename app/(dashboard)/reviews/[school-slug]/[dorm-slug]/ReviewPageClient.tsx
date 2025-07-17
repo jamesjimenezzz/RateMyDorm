@@ -21,11 +21,7 @@ const ReviewsPage = ({ schoolSlug, dormSlug }: Props) => {
     dormSlug as string
   );
 
-  const { data: reviews, isLoading: isReviewsLoading } = useFetchReviews(
-    dormSlug as string
-  );
-
-  if (isSchoolLoading || isDormLoading || isReviewsLoading) return <Spinner />;
+  if (isSchoolLoading || isDormLoading) return <Spinner />;
 
   if (!school || !dorm) {
     return notFound();
@@ -36,7 +32,7 @@ const ReviewsPage = ({ schoolSlug, dormSlug }: Props) => {
       <div className="max-w-7xl mx-auto">
         <HeaderReview school={school} dorm={dorm} />
       </div>
-      <HeroReview dorm={dorm} reviews={reviews} />
+      <HeroReview dorm={dorm} dormSlug={dormSlug} />
     </>
   );
 };

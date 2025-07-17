@@ -19,16 +19,24 @@ export const addReview = async (slug: string, data: AddReviewSchemaType) => {
   }
 };
 
-export const fetchReviews = async (slug: string) => {
+export const fetchReviews = async (
+  slug: string,
+  page: number,
+  rating?: number
+) => {
   try {
-    const res = await fetch(`/api/review/${slug}`);
+    const res = await fetch(
+      `/api/review/${slug}?page=${page}&limit=3${
+        rating ? `&rating=${rating}` : ""
+      }`
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch reviews");
     }
-    const result = await res.json();
-    return result;
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.log(error);
-    return { error: "Failed to fetch reviews" };
+    return [];
   }
 };

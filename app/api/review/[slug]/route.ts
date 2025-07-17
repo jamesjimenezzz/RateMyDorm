@@ -6,14 +6,25 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   const { slug } = await params;
+  const { searchParams } = new URL(request.url);
+  const page = parseInt(searchParams.get("page") || "0");
+  const rating = searchParams.get("rating") || undefined;
+  const limit = parseInt(searchParams.get("limit") || "5");
+  const skip = page * limit;
 
   try {
     const reviews = await prisma.review.findMany({
       where: {
         dormSlug: slug,
+        ...(rating ? { overallRate: Number(rating) } : {}),
       },
       include: {
         dorm: true,
+      },
+      skip,
+      take: limit,
+      orderBy: {
+        createdAt: "desc",
       },
     });
 
