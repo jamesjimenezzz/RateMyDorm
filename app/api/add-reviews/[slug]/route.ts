@@ -66,6 +66,10 @@ export async function POST(
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
 
+  const overallRate = Math.round(
+    (cleanliness + noiseLevel + location + amenities) / 4
+  );
+
   try {
     const addReview = await prisma.review.create({
       data: {
@@ -77,6 +81,7 @@ export async function POST(
         noiseLevelRate: noiseLevel,
         locationRate: location,
         amenitiesRate: amenities,
+        overallRate: overallRate,
         reviewTitle,
         reviewDescription: detailedReview,
         likeMost,

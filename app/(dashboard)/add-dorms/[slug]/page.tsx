@@ -12,14 +12,42 @@ import { notFound, useParams } from "next/navigation";
 import { useFetchSchool } from "@/hooks/useSchool";
 import { useAddDorm } from "@/hooks/useDorm";
 import { Dorm } from "@prisma/client";
+import { toast } from "sonner";
+import Spinner from "@/components/Spinner";
 
 const AddDormsPage = () => {
   const { slug } = useParams();
   const [page, setPage] = useState<number>(0);
-  const { data: school } = useFetchSchool(slug as string);
+  const { data: school, isLoading: isSchoolLoading } = useFetchSchool(
+    slug as string
+  );
   const { mutate } = useAddDorm();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<AddDormSchemaType>({
+    resolver: zodResolver(addDormSchema),
+    mode: "onChange",
+    defaultValues: {
+      dormName: "",
+      roomType: undefined,
+      yearLived: undefined,
+      semester: undefined,
+      photos: undefined,
+      cleanliness: 0,
+      location: 0,
+      noiseLevel: 0,
+      amenities: 0,
+      reviewTitle: "",
+      detailedReview: "",
+      likeMost: "",
+      improve: "",
+      recommendDorm: undefined,
+      isAnonymous: false,
+      userName: "",
+      classYear: undefined,
+    },
+  });
 
   const pages = [
     <FirstPage school={school} />,
@@ -27,6 +55,10 @@ const AddDormsPage = () => {
   ];
 
   const displayPage = pages[page];
+
+  if (isSchoolLoading) {
+    return <Spinner />;
+  }
 
   if (!school) {
     return notFound();
@@ -65,30 +97,6 @@ const AddDormsPage = () => {
     setPage((prev) => prev - 1);
   };
 
-  const form = useForm<AddDormSchemaType>({
-    resolver: zodResolver(addDormSchema),
-    mode: "onChange",
-    defaultValues: {
-      dormName: "",
-      roomType: undefined,
-      yearLived: undefined,
-      semester: undefined,
-      photos: undefined,
-      cleanliness: 0,
-      location: 0,
-      noiseLevel: 0,
-      amenities: 0,
-      reviewTitle: "",
-      detailedReview: "",
-      likeMost: "",
-      improve: "",
-      recommendDorm: undefined,
-      isAnonymous: false,
-      userName: "",
-      classYear: undefined,
-    },
-  });
-
   const onSubmit = async (data: AddDormSchemaType) => {
     setIsSubmitting(true);
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
@@ -109,10 +117,20 @@ const AddDormsPage = () => {
         ...data,
         photos: uploadedUrls,
       };
-      mutate({
-        dorm: finalPayLoad,
-        slug: slug as string,
-      });
+      mutate(
+        {
+          dorm: finalPayLoad,
+          slug: slug as string,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Dorm review added successfully");
+          },
+          onError: () => {
+            toast.error("Failed to add dorm review");
+          },
+        }
+      );
       form.reset();
       setPage(0);
     } catch (error) {

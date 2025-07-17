@@ -71,6 +71,10 @@ export async function POST(
 
   const dormSlug = dormName.toLowerCase().replace(/ /g, "-");
 
+  const overallRate = Math.round(
+    (cleanliness + noiseLevel + location + amenities) / 4
+  );
+
   try {
     const [dorm, review] = await prisma.$transaction([
       prisma.dorm.create({
@@ -92,6 +96,7 @@ export async function POST(
           noiseLevelRate: noiseLevel,
           locationRate: location,
           amenitiesRate: amenities,
+          overallRate: overallRate,
           reviewTitle,
           reviewDescription: detailedReview,
           likeMost,

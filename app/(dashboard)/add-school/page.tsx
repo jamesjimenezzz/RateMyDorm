@@ -23,6 +23,7 @@ import { Trash } from "lucide-react";
 import { uploadCloudinary } from "@/lib/uploadCloudinary";
 import { useAddSchool } from "@/hooks/useSchool";
 import BackToAllSchools from "@/components/BackToAllSchools";
+import { toast } from "sonner";
 
 const AddSchool = () => {
   const [picture, setPicture] = useState<File | string | null>(null);
@@ -66,7 +67,14 @@ const AddSchool = () => {
           picture: uploadedUrl,
         };
 
-        mutate(finalPayLoad);
+        mutate(finalPayLoad, {
+          onSuccess: () => {
+            toast.success("School added successfully");
+          },
+          onError: () => {
+            toast.error("Failed to add school");
+          },
+        });
         reset();
         setPicture(null);
       } catch (error) {
@@ -140,7 +148,7 @@ const AddSchool = () => {
               </div>
               <div className="flex flex-col gap-2 my-2">
                 <label className="px-2 text-sm" htmlFor="school-name">
-                  City *
+                  District *
                 </label>
                 <Input
                   className="py-5"
@@ -154,7 +162,7 @@ const AddSchool = () => {
               </div>
               <div className="flex flex-col gap-2 my-2">
                 <label className="px-2 text-sm" htmlFor="school-name">
-                  State *
+                  City *
                 </label>
                 <Input
                   className="py-5"

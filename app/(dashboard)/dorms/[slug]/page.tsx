@@ -8,7 +8,7 @@ import {
 import { fetchSchool } from "@/lib/server/fetchSchool";
 
 const MainDormPage = async ({ params }: { params: { slug: string } }) => {
-  const { slug } = params;
+  const { slug } = await params;
 
   const queryClient = new QueryClient();
 

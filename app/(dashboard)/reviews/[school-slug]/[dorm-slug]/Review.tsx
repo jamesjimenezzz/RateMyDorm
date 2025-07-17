@@ -30,13 +30,11 @@ const Review = ({ review }: { review: ReviewType }) => {
                   SVGstyle={{
                     display: "inline-block",
                   }}
-                  initialValue={averageRateByUser[0]}
+                  initialValue={review.overallRate}
                   size={20}
                   readonly
                 />
-                <p className="font-semibold pt-0.5">
-                  {Math.round(averageRateByUser[0])} / 5
-                </p>
+                <p className="font-semibold pt-0.5">{review.overallRate} / 5</p>
               </div>
 
               <div>

@@ -27,7 +27,6 @@ export const addDormSchema = z.object({
   location: z.number().min(1, { message: "Location is required." }),
   noiseLevel: z.number().min(1, { message: "Noise level is required." }),
   amenities: z.number().min(1, { message: "Amenities is required." }),
-
   reviewTitle: z
     .string()
     .min(3, { message: "Review title must be at least 3 characters long." }),

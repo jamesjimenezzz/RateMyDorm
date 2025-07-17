@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <Providers>
-      <html lang="en">
+      <html className="scroll-smooth" lang="en">
         <body
           className={`${poppins.variable} antialiased flex flex-col min-h-screen   `}
         >

@@ -131,6 +131,7 @@ photoUrl String[] @default([])
   noiseLevelRate Int
   locationRate Int
   amenitiesRate Int
+  overallRate Int
   reviewTitle String
   reviewDescription String
   likeMost String
