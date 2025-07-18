@@ -6,10 +6,11 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Rating } from "react-simple-star-rating";
-import { Review as ReviewType } from "@prisma/client";
+import { Review as ReviewType, User } from "@prisma/client";
 import { calculateRatings } from "@/lib/calculateRatings";
+import { BadgeCheckIcon } from "lucide-react";
 
-const Review = ({ review }: { review: ReviewType }) => {
+const Review = ({ review }: { review: ReviewType & { user: User } }) => {
   const genreOfRates = [
     review.cleanlinessRate,
     review.noiseLevelRate,
@@ -68,6 +69,13 @@ const Review = ({ review }: { review: ReviewType }) => {
               <p>{review.semester}</p>
               <p>{averageRateByUser[0].toFixed(1)}</p>
             </div>
+
+            {review.user.isStudentEmail && (
+              <div className="flex items-center bg-blue-500 rounded-lg p-1 px-1.5 gap-2">
+                <BadgeCheckIcon className="w-4 h-4 text-white" />
+                <p className="text-white text-sm">Verified Student</p>
+              </div>
+            )}
           </div>
         </CardFooter>
       </Card>

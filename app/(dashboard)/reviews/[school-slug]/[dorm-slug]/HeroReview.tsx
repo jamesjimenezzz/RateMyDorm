@@ -15,7 +15,7 @@ import Link from "next/link";
 import LabelForm from "@/components/LabelForm";
 import { Button } from "@/components/ui/button";
 import Review from "./Review";
-import { Dorm, Review as ReviewType } from "@prisma/client";
+import { Dorm, Review as ReviewType, User } from "@prisma/client";
 import { calculateRatings } from "@/lib/calculateRatings";
 import { useFetchReviews } from "@/hooks/useReview";
 import { Funnel } from "lucide-react";
@@ -265,7 +265,7 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
               </Select>
             </div>
             {reviews && reviews.length > 0 ? (
-              reviews?.map((review: ReviewType) => (
+              reviews?.map((review: ReviewType & { user: User }) => (
                 <Review key={review.id} review={review} />
               ))
             ) : (

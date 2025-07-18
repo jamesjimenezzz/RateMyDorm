@@ -20,6 +20,7 @@ export async function GET(
       },
       include: {
         dorm: true,
+        user: true,
       },
       skip,
       take: limit,
