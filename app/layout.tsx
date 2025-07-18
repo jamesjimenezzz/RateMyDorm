@@ -4,6 +4,8 @@ import Header from "@/components/Header";
 import { Poppins } from "next/font/google";
 import Providers from "@/components/Providers";
 import Footer from "./Footer";
+import { auth } from "@clerk/nextjs/server";
+import { createUser } from "@/lib/db/createUsers";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -16,18 +18,26 @@ export const metadata: Metadata = {
   description: "Your resource for college dorm reviews",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { userId } = await auth();
+
+  let user = null;
+
+  if (userId) {
+    user = await createUser();
+  }
+
   return (
     <Providers>
       <html className="scroll-smooth" lang="en">
         <body
           className={`${poppins.variable} antialiased flex flex-col min-h-screen   `}
         >
-          <Header />
+          <Header user={user} />
           <div className="flex-1">{children}</div>
           <Footer />
         </body>
