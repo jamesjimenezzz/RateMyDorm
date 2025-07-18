@@ -42,8 +42,8 @@ const Header = async () => {
           </SignInButton>
         </SignedOut>
         <SignedIn>
-          <div className="items-center flex gap-10">
-            {user && user.isStudentEmail ? (
+          <div className="items-center flex gap-5">
+            {user && user.isStudentEmail && (
               <Badge
                 variant="secondary"
                 className="bg-blue-500 py-1.5 text-white dark:bg-blue-600 flex items-center gap-2"
@@ -51,7 +51,15 @@ const Header = async () => {
                 <BadgeCheckIcon />
                 Verified Student
               </Badge>
-            ) : (
+            )}
+            {user && user.role === "admin" && (
+              <Link href="/admin">
+                <Badge className="py-1 px-3 bg-green-500 text-white">
+                  Admin Account
+                </Badge>
+              </Link>
+            )}
+            {user && !user.isStudentEmail && user.role !== "admin" && (
               <p className="text-sm hover:underline hover:text-gray-500 cursor-pointer text-gray-400">
                 Verify now
               </p>

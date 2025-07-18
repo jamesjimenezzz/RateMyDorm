@@ -7,6 +7,7 @@ export function useFetchSchools() {
   return useQuery({
     queryKey: ["schools"],
     queryFn: fetchSchools,
+    staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
   });
 }
