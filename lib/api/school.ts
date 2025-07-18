@@ -43,3 +43,22 @@ export async function fetchSchool(slug: string) {
     return null;
   }
 }
+
+export async function fetchPendingSchools() {
+  try {
+    const schools = await prisma?.school.findMany({
+      where: {
+        status: "pending",
+      },
+    });
+
+    if (!schools) {
+      throw new Error("Failed to fetch pending schools");
+    }
+
+    return schools;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
