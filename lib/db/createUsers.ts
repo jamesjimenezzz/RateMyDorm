@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
+import edulist from "@/edulist.json";
 
 export async function createUser() {
   const user = await currentUser();
@@ -11,6 +12,16 @@ export async function createUser() {
 
   const clerkId = user.id;
 
+  const filterPH = edulist
+    .filter((item) => item.country === "Philippines")
+    .flatMap((item) => item.domains);
+
+  const email = user.emailAddresses[0].emailAddress;
+
+  const domain = email.split("@")[1];
+
+  const isStudentEmail = filterPH.some((item) => domain === item);
+
   const createUser = await prisma.user.upsert({
     where: {
       clerkId: clerkId,
@@ -21,6 +32,7 @@ export async function createUser() {
       name: user.fullName || "",
       email: user.emailAddresses[0].emailAddress,
       imageUrl: user.imageUrl,
+      isStudentEmail: isStudentEmail,
     },
   });
 

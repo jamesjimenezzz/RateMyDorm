@@ -29,6 +29,7 @@ model User {
   email String @unique
   imageUrl String?
   role Role @default(user)
+  isStudentEmail Boolean @default(false)
   clerkId String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
