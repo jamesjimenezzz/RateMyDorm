@@ -1,10 +1,14 @@
-import prisma from "@/lib/prisma";
+import { cache } from "react";
+import prisma from "../prisma";
+import { auth } from "@clerk/nextjs/server";
 
-export async function getUser(clerkId: string) {
+export const getUser = cache(async () => {
+  const { userId } = await auth();
+
   try {
-    const user = await prisma?.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
-        clerkId: clerkId,
+        clerkId: userId || "",
       },
     });
 
@@ -13,4 +17,4 @@ export async function getUser(clerkId: string) {
     console.error(error);
     return null;
   }
-}
+});
