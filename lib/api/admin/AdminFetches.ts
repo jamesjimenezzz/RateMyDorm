@@ -39,3 +39,21 @@ export const FetchPendingReviews = async () => {
     throw new Error("Failed to fetch reviews");
   }
 };
+
+export const updatePendingSchools = async (id: string) => {
+  try {
+    const res = await fetch(`/api/admin-schools/${id}`, {
+      method: "POST",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update");
+    }
+
+    const data = res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

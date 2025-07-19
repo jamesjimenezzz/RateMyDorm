@@ -1,6 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchSchool, fetchSchools } from "@/lib/api/school";
 import { addSchool } from "@/lib/api/school";
+import {
+  FetchPendingSchools,
+  updatePendingSchools,
+} from "@/lib/api/admin/AdminFetches";
 import { SchoolPassData } from "@/types";
 
 export function useFetchSchools() {
@@ -30,5 +34,26 @@ export function useFetchSchool(slug: string) {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useFetchPendingSchools() {
+  return useQuery({
+    queryKey: ["pendingSchools"],
+    queryFn: FetchPendingSchools,
+  });
+}
+
+export function useUpdateSchools() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updatePendingSchools,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["pendingSchools"],
+      }),
+        queryClient.invalidateQueries({ queryKey: ["schools"] });
+    },
   });
 }

@@ -5,6 +5,9 @@ import { auth } from "@clerk/nextjs/server";
 export async function GET() {
   try {
     const schools = await prisma.school.findMany({
+      where: {
+        status: "approved",
+      },
       orderBy: {
         createdAt: "desc",
       },

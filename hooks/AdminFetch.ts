@@ -1,26 +1,40 @@
-import { FetchPendingSchools } from "@/lib/api/admin/AdminFetches";
+import {
+  FetchPendingSchools,
+  updatePendingSchools,
+} from "@/lib/api/admin/AdminFetches";
 import { FetchPendingDorms } from "@/lib/api/admin/AdminFetches";
 import { FetchPendingReviews } from "@/lib/api/admin/AdminFetches";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useFetchPendingSchools() {
   return useQuery({
-    queryKey: ["schools"],
+    queryKey: ["pendingSchools"],
     queryFn: FetchPendingSchools,
   });
 }
 
 export function useFetchPendingDorms() {
   return useQuery({
-    queryKey: ["dorms"],
+    queryKey: ["pendingDorms"],
     queryFn: FetchPendingDorms,
   });
 }
 
 export function useFetchPendingReviews() {
   return useQuery({
-    queryKey: ["reviews"],
+    queryKey: ["pendingReviews"],
     queryFn: FetchPendingReviews,
+  });
+}
+
+export function useUpdateSchools() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updatePendingSchools,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["schools"] });
+    },
   });
 }

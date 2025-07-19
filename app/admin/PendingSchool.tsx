@@ -12,12 +12,15 @@ import {
 import Image from "next/image";
 import { Check } from "lucide-react";
 import { Trash } from "lucide-react";
+import { useUpdateSchools } from "@/hooks/useSchool";
 
 interface Props {
   school: School;
 }
 
 const PendingSchool = ({ school }: Props) => {
+  const { mutate } = useUpdateSchools();
+
   return (
     <Card className="max-w-xl">
       <CardContent className="flex  justify-between">
@@ -37,7 +40,11 @@ const PendingSchool = ({ school }: Props) => {
 
           <div className="flex gap-3">
             <Trash size={20} />
-            <Check size={20} />
+            <Check
+              className="cursor-pointer"
+              onClick={() => mutate(school.id)}
+              size={20}
+            />
           </div>
         </div>
         <div className="max-w-[150px]">
