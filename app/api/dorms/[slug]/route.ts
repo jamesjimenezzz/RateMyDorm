@@ -11,6 +11,7 @@ export async function GET(
     const dorm = await prisma.dorm.findMany({
       where: {
         schoolSlug: slug,
+        status: "approved",
       },
     });
 

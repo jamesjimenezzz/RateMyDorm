@@ -42,8 +42,7 @@ const DormPage = ({
             {school?.city}, {school?.state}
           </p>
           <p className="text-gray-600 text-lg mb-2">
-            Boston University is a leading private research university with two
-            primary campuses in the heart of Boston.
+            {school?.description || "No description available"}
           </p>
           <div className="flex items-center  gap-6 mb-2 ">
             <p className="text-gray-700 font-[500]  flex items-center gap-2">

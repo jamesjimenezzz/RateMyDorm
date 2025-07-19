@@ -13,8 +13,15 @@ export async function GET() {
       },
       include: {
         dorms: {
+          where: {
+            status: "approved",
+          },
           include: {
-            reviews: true,
+            reviews: {
+              where: {
+                status: "approved",
+              },
+            },
           },
         },
       },

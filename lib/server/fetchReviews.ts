@@ -5,6 +5,7 @@ export async function fetchReviews(slug: string) {
     const reviews = await prisma.review.findMany({
       where: {
         dormSlug: slug,
+        status: "approved",
       },
       include: {
         dorm: true,

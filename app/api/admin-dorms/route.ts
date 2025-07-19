@@ -7,6 +7,9 @@ export async function GET(req: Request) {
       where: {
         status: "pending",
       },
+      include: {
+        school: true,
+      },
     });
 
     if (!dorms) {

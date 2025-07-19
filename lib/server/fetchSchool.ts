@@ -5,11 +5,19 @@ export async function fetchSchool(slug: string) {
     const school = await prisma?.school.findUnique({
       where: {
         slug: slug,
+        status: "approved",
       },
       include: {
         dorms: {
+          where: {
+            status: "approved",
+          },
           include: {
-            reviews: true,
+            reviews: {
+              where: {
+                status: "approved",
+              },
+            },
           },
         },
       },

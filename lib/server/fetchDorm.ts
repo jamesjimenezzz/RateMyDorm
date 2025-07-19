@@ -5,10 +5,15 @@ export async function fetchDorm(slug: string) {
     const dorm = await prisma.dorm.findUnique({
       where: {
         slug: slug,
+        status: "approved",
       },
       include: {
         school: true,
-        reviews: true,
+        reviews: {
+          where: {
+            status: "approved",
+          },
+        },
       },
     });
 

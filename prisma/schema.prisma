@@ -63,6 +63,7 @@ model School {
   name String
   shortName String?
   slug String @unique
+  description String?
   city String
   state String
   schoolType SchoolType

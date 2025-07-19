@@ -31,9 +31,9 @@ export function useFetchSchool(slug: string) {
   return useQuery({
     queryKey: ["school", slug],
     queryFn: () => fetchSchool(slug),
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
   });
 }
 

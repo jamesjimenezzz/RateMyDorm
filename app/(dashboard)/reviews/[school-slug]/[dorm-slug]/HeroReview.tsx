@@ -36,6 +36,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import Spinner from "@/components/Spinner";
+import { notFound } from "next/navigation";
 interface Props {
   dorm: Dorm & { reviews: ReviewType[] };
   dormSlug: string;
@@ -49,6 +50,16 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
 
   const reviews = data?.reviews;
   const hasMore = data?.hasMore;
+
+  if (reviews?.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-gray-500">
+          No reviews found yet, please check back later
+        </p>
+      </div>
+    );
+  }
 
   if (isLoading) return <Spinner />;
 
@@ -93,13 +104,13 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
             <Card>
               <CardHeader className="text-center">
                 <CardTitle className="font-bold text-3xl">
-                  {overallRating.toFixed(1)}
+                  {overallRating.toFixed(1) || "0"}
                 </CardTitle>
                 <Rating
                   SVGstyle={{
                     display: "inline-block",
                   }}
-                  initialValue={overallRating}
+                  initialValue={overallRating || 0}
                   allowFraction
                   size={25}
                   readonly
@@ -148,12 +159,12 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                       SVGstyle={{
                         display: "inline-block",
                       }}
-                      initialValue={overallCleanliness}
+                      initialValue={overallCleanliness || 0}
                       size={17}
                       readonly
                     />
                     <LabelForm className="pt-0.5">
-                      {overallCleanliness.toFixed(1)}
+                      {overallCleanliness.toFixed(1) || 0}
                     </LabelForm>
                   </div>
                 </div>
@@ -168,12 +179,12 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                       SVGstyle={{
                         display: "inline-block",
                       }}
-                      initialValue={overallNoiseLevel}
+                      initialValue={overallNoiseLevel || 0}
                       size={17}
                       readonly
                     />
                     <LabelForm className="pt-0.5">
-                      {overallNoiseLevel.toFixed(1)}
+                      {overallNoiseLevel.toFixed(1) || 0}
                     </LabelForm>
                   </div>
                 </div>
@@ -188,12 +199,12 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                       SVGstyle={{
                         display: "inline-block",
                       }}
-                      initialValue={overallLocation}
+                      initialValue={overallLocation || 0}
                       size={17}
                       readonly
                     />
                     <LabelForm className="pt-0.5">
-                      {overallLocation.toFixed(1)}
+                      {overallLocation.toFixed(1) || 0}
                     </LabelForm>
                   </div>
                 </div>
@@ -208,12 +219,12 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                       SVGstyle={{
                         display: "inline-block",
                       }}
-                      initialValue={overallAmenities}
+                      initialValue={overallAmenities || 0}
                       size={17}
                       readonly
                     />
                     <LabelForm className="pt-0.5">
-                      {overallAmenities.toFixed(1)}
+                      {overallAmenities.toFixed(1) || 0}
                     </LabelForm>
                   </div>
                 </div>

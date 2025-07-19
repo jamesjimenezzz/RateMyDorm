@@ -1,4 +1,8 @@
 import { AddReviewSchemaType } from "@/lib/addReviewSchema";
+import {
+  FetchPendingReviews,
+  updatePendingReview,
+} from "@/lib/api/admin/AdminFetches";
 import { addReview, fetchReviews } from "@/lib/api/review";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -26,3 +30,21 @@ export const useReview = () => {
     },
   });
 };
+
+export function useFetchPendingReviews() {
+  return useQuery({
+    queryKey: ["pendingReviews"],
+    queryFn: FetchPendingReviews,
+  });
+}
+
+export function useUpdatePendingReview() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updatePendingReview,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["pendingReviews"] });
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+    },
+  });
+}

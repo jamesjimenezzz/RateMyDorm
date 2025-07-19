@@ -57,3 +57,30 @@ export const updatePendingSchools = async (id: string) => {
     return null;
   }
 };
+
+export const updatePendingDorms = async (id: string) => {
+  try {
+    const res = await fetch(`/api/admin-dorms/${id}`, {
+      method: "POST",
+    });
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const updatePendingReview = async (id: string) => {
+  try {
+    const res = await fetch(`/api/admin-reviews/${id}`, {
+      method: "POST",
+    });
+    if (!res.ok) {
+      throw new Error("Failed to update review");
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

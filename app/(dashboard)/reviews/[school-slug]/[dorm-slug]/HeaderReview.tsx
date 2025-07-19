@@ -36,7 +36,7 @@ const DormPage = ({ school, dorm }: HeaderReviewProps) => {
             <span className="flex items-center bg-gray-100 rounded-xl px-2.5 py-1 gap-2">
               <Star className="fill-yellow-400 text-yellow-400" size={15} />
               <p className="text-xs font-semibold">
-                {overallRating.toFixed(1)}
+                {overallRating ? overallRating.toFixed(1) : "0"}
               </p>
             </span>
           </div>

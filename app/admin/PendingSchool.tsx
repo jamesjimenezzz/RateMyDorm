@@ -19,14 +19,14 @@ interface Props {
 }
 
 const PendingSchool = ({ school }: Props) => {
-  const { mutate } = useUpdateSchools();
+  const { mutate, isPending } = useUpdateSchools();
 
   return (
-    <Card className="max-w-xl">
+    <Card className={`max-w-md ${isPending ? "opacity-50" : ""}`}>
       <CardContent className="flex  justify-between">
         <div className="flex flex-col">
-          <div className="flex-1">
-            <h1>
+          <div className="">
+            <h1 className=" font-bold">
               {school.name} ({school.shortName})
             </h1>
             <div className="text-sm text-gray-500 flex gap-5">
@@ -34,8 +34,12 @@ const PendingSchool = ({ school }: Props) => {
                 {school.city}, {school.state}
               </p>
               <p>{school.schoolType}</p>
-              <p>Dorms nearby: {school.dormsNearby}</p>
             </div>
+          </div>
+
+          <div className="flex flex-col my-4 flex-1 text-sm text-gray-500">
+            <p>Dorms nearby: {school.dormsNearby}</p>
+            <p>{school.website || "No website"}</p>
           </div>
 
           <div className="flex gap-3">

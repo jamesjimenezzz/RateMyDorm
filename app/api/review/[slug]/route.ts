@@ -17,6 +17,7 @@ export async function GET(
       where: {
         dormSlug: slug,
         ...(rating ? { overallRate: Number(rating) } : {}),
+        status: "approved",
       },
       include: {
         dorm: true,
