@@ -42,3 +42,22 @@ export const fetchDorm = async (slug: string) => {
     return { error: "Failed to fetch dorm" };
   }
 };
+
+export async function fetchPendingDorms() {
+  try {
+    const dorms = await prisma?.dorm.findMany({
+      where: {
+        status: "pending",
+      },
+    });
+
+    if (!dorms) {
+      throw new Error("Failed to fetch pending dorms");
+    }
+
+    return dorms;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

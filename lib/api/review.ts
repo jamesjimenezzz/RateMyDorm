@@ -40,3 +40,22 @@ export const fetchReviews = async (
     return [];
   }
 };
+
+export async function fetchPendingReviews() {
+  try {
+    const reviews = await prisma?.review.findMany({
+      where: {
+        status: "pending",
+      },
+    });
+
+    if (!reviews) {
+      throw new Error("Failed to fetch pending reviews.");
+    }
+
+    return reviews;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

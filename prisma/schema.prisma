@@ -141,6 +141,7 @@ photoUrl String[] @default([])
   isAnonymous Boolean
   userName String? 
   classYear YearLived?
+  status Status @default(pending)
   dormSlug String
   userId String 
   dorm Dorm @relation(fields: [dormSlug], references: [slug])

@@ -67,11 +67,12 @@ const DormPage = ({
         </div>
         <div className="h-80 w-full">
           <Image
-            className="h-full w-full object-cover rounded-lg priority"
+            className="h-full w-full object-cover rounded-lg "
             src={school?.picture[0] || placeholder}
             alt="dorm"
             width={800}
             height={300}
+            priority
           />
         </div>
       </div>

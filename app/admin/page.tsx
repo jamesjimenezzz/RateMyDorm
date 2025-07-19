@@ -1,22 +1,40 @@
-import { fetchPendingSchools } from "@/lib/api/school";
-import Link from "next/link";
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import AdminPendingSchools from "./AdminPendingSchools";
+import AdminPendingReviews from "./AdminPendingReviews";
+import AdminPendingDorms from "./AdminPendingDorms";
 
-const AdminPage = async () => {
-  const pendingSchools = await fetchPendingSchools();
+const AdminPage = () => {
+  const [page, setPage] = useState<number>(0);
+
+  const fetchPages = [
+    <AdminPendingSchools />,
+    <AdminPendingDorms />,
+    <AdminPendingReviews />,
+  ];
+
+  const contentPage = fetchPages[page];
 
   return (
-    <div className="mx-5">
-      <h1 className="text-2xl font-bold">Pending Requests</h1>
-      <div>
-        {pendingSchools.map((school) => (
-          <Link href={`/dorms/${school.slug}`}>
-            <div key={school.id}>
-              <p>{school.name}</p>
-            </div>
-          </Link>
-        ))}
+    <div className=" max-w-[1400px] mx-auto">
+      <div className=" flex  items-center font-bold text-lg mx-5 justify-between my-10">
+        <div>
+          <h1 onClick={() => setPage(0)} className="cursor-pointer">
+            School Pending Requests
+          </h1>
+        </div>
+        <div>
+          <h1 onClick={() => setPage(1)} className="cursor-pointer">
+            Dorm Pending Requests
+          </h1>
+        </div>
+        <div>
+          <h1 onClick={() => setPage(2)} className="cursor-pointer">
+            Review Pending Requests
+          </h1>
+        </div>
       </div>
+      {contentPage}
     </div>
   );
 };

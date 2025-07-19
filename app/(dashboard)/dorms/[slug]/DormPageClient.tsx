@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 const DormPage = ({ slug }: { slug: string }) => {
   const { data: school, isLoading } = useFetchSchool(slug as string);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading && !school) return <Spinner />;
 
   if (!school) return notFound();
 
