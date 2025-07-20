@@ -9,7 +9,7 @@ import { useFetchSchools } from "@/hooks/useSchool";
 import Spinner from "@/components/Spinner";
 
 const Home = () => {
-  const { data: schools, isFetching } = useFetchSchools();
+  const { isFetching } = useFetchSchools();
 
   if (isFetching) return <Spinner />;
 
@@ -17,7 +17,7 @@ const Home = () => {
     <>
       <div className="max-w-7xl px-5 text-center flex flex-col items-center justify-center  overflow-hidden mx-auto">
         <Landing />
-        <PopSchools schools={schools || []} />
+        <PopSchools />
         <PopDorms />
         <HighestRatingDorms />
       </div>

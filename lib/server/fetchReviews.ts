@@ -10,7 +10,7 @@ export async function fetchReviews(slug: string) {
     });
 
     return reviews;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

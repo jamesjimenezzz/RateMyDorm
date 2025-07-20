@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
 
@@ -25,7 +25,7 @@ export async function POST(
     }
 
     return NextResponse.json({ message: "Review approved" }, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "Error approving review" },
       { status: 500 }

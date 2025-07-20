@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import PendingSchool from "./PendingSchool";
-import { useFetchPendingSchools, useUpdateSchools } from "@/hooks/useSchool";
+import { useFetchPendingSchools } from "@/hooks/useSchool";
 import { School } from "@prisma/client";
 
 const AdminPendingSchools = () => {
-  const { data: pendingSchools, isLoading } = useFetchPendingSchools();
+  const { data: pendingSchools } = useFetchPendingSchools();
 
   return (
     <div>

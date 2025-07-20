@@ -5,7 +5,7 @@ import { useFetchPendingReviews } from "@/hooks/useReview";
 import { Review } from "@prisma/client";
 
 const AdminPendingReviews = () => {
-  const { data: pendingReviews, isLoading } = useFetchPendingReviews();
+  const { data: pendingReviews } = useFetchPendingReviews();
 
   return (
     <div>

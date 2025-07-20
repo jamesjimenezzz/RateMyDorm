@@ -28,7 +28,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import Spinner from "@/components/Spinner";
-import { notFound } from "next/navigation";
+
 interface Props {
   dorm: Dorm & { reviews: ReviewType[] };
   dormSlug: string;
@@ -62,15 +62,6 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
     };
   });
 
-  const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault();
-    if (e.target.value === "all") {
-      setRating(undefined);
-    } else {
-      setRating(Number(e.target.value));
-    }
-  };
-
   return (
     <div className="bg-[#f9fafb] py-15 w-full">
       <div className="max-w-7xl mx-auto">
@@ -102,8 +93,11 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                 </p>
               </CardHeader>
               <CardContent className="flex flex-col gap-2">
-                {progressBar.map((progress) => (
-                  <div className="flex justify-between items-center">
+                {progressBar.map((progress, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-between items-center"
+                  >
                     <div className="flex items-center gap-2 w-full flex-1">
                       <div className="flex items-center gap-0.5">
                         <p className="text-sm">{progress.star}</p>
@@ -221,7 +215,8 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                   </div>
                   <h1 className="text-xl font-bold">Share your experience</h1>
                   <p className="text-sm max-w-[250px] text-muted-foreground">
-                    Help other students by adding a review that's not listed
+                    Help other students by adding a review that&apos;s not
+                    listed
                   </p>
                 </div>
               </div>

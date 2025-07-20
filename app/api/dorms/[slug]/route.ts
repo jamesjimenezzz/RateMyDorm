@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
   const { searchParams } = new URL(req.url);
@@ -40,7 +40,7 @@ export async function GET(
     });
 
     return NextResponse.json({ dorms, haveMore });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch dorms" },
       { status: 500 }
@@ -50,7 +50,7 @@ export async function GET(
 
 export async function POST(
   req: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   const body = await req.json();
 

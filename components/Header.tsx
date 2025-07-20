@@ -1,17 +1,10 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
-import {
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Badge } from "./ui/badge";
 import { BadgeCheckIcon } from "lucide-react";
 import { getUser } from "@/lib/api/user";
-import { auth } from "@clerk/nextjs/server";
 
 const Header = async () => {
   const user = await getUser();

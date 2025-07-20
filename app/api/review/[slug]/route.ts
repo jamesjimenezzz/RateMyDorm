@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
   const { searchParams } = new URL(request.url);
@@ -34,7 +34,7 @@ export async function GET(
       reviews,
       hasMore: reviews.length === limit,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         message: "Error fetching reviews",

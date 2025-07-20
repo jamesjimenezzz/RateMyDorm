@@ -1,10 +1,10 @@
 import prisma from "@/lib/prisma";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
 
@@ -16,7 +16,7 @@ export async function GET(
     });
 
     return NextResponse.json(selectedDorm, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch dorm" },
       { status: 500 }
@@ -26,9 +26,9 @@ export async function GET(
 
 export async function POST(
   req: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = params;
+  const { slug } = await params;
   const body = await req.json();
 
   const {
@@ -96,7 +96,7 @@ export async function POST(
     });
 
     return NextResponse.json({ addReview });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to add review" },
       { status: 500 }

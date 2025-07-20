@@ -8,7 +8,7 @@ const openai = new OpenAI({
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
 
@@ -55,7 +55,7 @@ export async function POST(
     }
 
     return NextResponse.json(update);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: "Failed to update" });
   }
 }

@@ -12,13 +12,6 @@ import { calculateRatings } from "@/lib/calculateRatings";
 import { BadgeCheckIcon } from "lucide-react";
 
 const Review = ({ review }: { review: ReviewType & { user: User } }) => {
-  const genreOfRates = [
-    review.cleanlinessRate,
-    review.noiseLevelRate,
-    review.locationRate,
-    review.amenitiesRate,
-  ];
-
   const { averageRateByUser } = calculateRatings([review]);
 
   return (

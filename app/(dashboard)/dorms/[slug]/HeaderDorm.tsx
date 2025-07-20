@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { MapPin, Star } from "lucide-react";
 import { Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,12 +13,6 @@ const DormPage = ({
 }: {
   school: School & { dorms: (Dorm & { reviews: Review[] })[] };
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   return (
     <div className="pb-12">
       <div className="pt-10 ">

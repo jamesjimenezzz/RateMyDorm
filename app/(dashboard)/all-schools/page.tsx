@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import BackToHome from "@/components/BackToHome";
 import { useFetchSchools } from "@/hooks/useSchool";
+import Spinner from "@/components/Spinner";
 
 const AllSchools = () => {
   const { data: schoolsData, isFetching } = useFetchSchools();
@@ -10,6 +11,8 @@ const AllSchools = () => {
   const filterAlphabetically = schoolsData?.sort((a, b) => {
     return a.name.localeCompare(b.name);
   });
+
+  if (isFetching) return <Spinner />;
 
   return (
     <div className="max-w-7xl px-5 mx-auto min-h-screen my-10">
@@ -20,7 +23,7 @@ const AllSchools = () => {
           <h1 className="text-2xl">Schools on RateMyDorm</h1>
         </div>
         <div className="flex gap-2 items-center">
-          <p className="text-muted-foreground">Didn't find your school?</p>
+          <p className="text-muted-foreground">Didn&apos;t find your school?</p>
           <Link href={"/add-school"}>
             <p className="hover:underline cursor-pointer font-semibold text-blue-400">
               Add your school
@@ -32,7 +35,7 @@ const AllSchools = () => {
         {filterAlphabetically?.map((school, index) => (
           <p
             className="font-[500] my-1.5 hover:underline cursor-pointer"
-            key={school.id}
+            key={index}
           >
             <Link href={`/dorms/${school.slug}`}>{school.name} </Link>
           </p>

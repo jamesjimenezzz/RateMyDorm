@@ -35,7 +35,7 @@ const AddSchool = () => {
     handleSubmit,
     setValue,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<AddSchoolSchemaType>({
     resolver: zodResolver(addSchoolSchema),
   });
@@ -267,7 +267,7 @@ const AddSchool = () => {
                 Cancel
               </Button>
               <Button
-                disabled={isSubmitting}
+                disabled={isPending}
                 type="submit"
                 className="text-sm flex-1/2 cursor-pointer"
               >

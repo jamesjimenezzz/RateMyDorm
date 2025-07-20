@@ -8,9 +8,9 @@ const AdminPage = () => {
   const [page, setPage] = useState<number>(0);
 
   const fetchPages = [
-    <AdminPendingSchools />,
-    <AdminPendingDorms />,
-    <AdminPendingReviews />,
+    <AdminPendingSchools key={0} />,
+    <AdminPendingDorms key={1} />,
+    <AdminPendingReviews key={2} />,
   ];
 
   const contentPage = fetchPages[page];

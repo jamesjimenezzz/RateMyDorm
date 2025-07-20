@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 
 export async function GET(
   req: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
 
@@ -16,7 +16,7 @@ export async function GET(
     });
 
     return NextResponse.json(school);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         message: "Error fetching school",

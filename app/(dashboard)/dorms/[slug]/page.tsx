@@ -7,7 +7,11 @@ import {
 } from "@tanstack/react-query";
 import { fetchSchool } from "@/lib/server/fetchSchool";
 
-const MainDormPage = async ({ params }: { params: { slug: string } }) => {
+const MainDormPage = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
   const { slug } = await params;
 
   const queryClient = new QueryClient();

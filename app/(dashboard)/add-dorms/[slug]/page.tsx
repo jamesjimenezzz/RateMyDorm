@@ -49,8 +49,8 @@ const AddDormsPage = () => {
   });
 
   const pages = [
-    <FirstPage school={school} />,
-    <SecondPage dormData={undefined as unknown as Dorm} />,
+    <FirstPage key={school?.id} school={school} />,
+    <SecondPage key={school?.id} dormData={undefined as unknown as Dorm} />,
   ];
 
   const displayPage = pages[page];

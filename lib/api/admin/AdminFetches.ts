@@ -63,6 +63,11 @@ export const updatePendingDorms = async (id: string) => {
     const res = await fetch(`/api/admin-dorms/${id}`, {
       method: "POST",
     });
+    if (!res.ok) {
+      throw new Error("Failed to update dorm");
+    }
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.log(error);
     return null;

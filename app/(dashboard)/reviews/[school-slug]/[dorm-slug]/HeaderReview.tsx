@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { MapPin, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -14,7 +14,6 @@ interface HeaderReviewProps {
 }
 
 const DormPage = ({ school, dorm }: HeaderReviewProps) => {
-  const [isMounted, setIsMounted] = useState(false);
   const { overallRating } = calculateRatings(dorm?.reviews);
 
   return (

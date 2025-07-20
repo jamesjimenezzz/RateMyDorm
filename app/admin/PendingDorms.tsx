@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Dorm, School } from "@prisma/client";
 import React from "react";
 import placeholder2 from "@/public/placeholder2.png";

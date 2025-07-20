@@ -12,7 +12,7 @@ import { uploadCloudinary } from "@/lib/uploadCloudinary";
 import Spinner from "@/components/Spinner";
 
 const AddReviews = () => {
-  const [formKey, setFormKey] = useState(0);
+  const [formKey] = useState(0);
   const { slug } = useParams();
   const { data: dorm, isFetching } = useFetchDorm(slug as string);
   const router = useRouter();

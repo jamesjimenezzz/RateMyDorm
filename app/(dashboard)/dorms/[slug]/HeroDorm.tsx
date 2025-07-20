@@ -126,7 +126,8 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
               </div>
               <h1 className="text-xl font-bold">Missing a dorm?</h1>
               <p className="text-sm max-w-[250px] text-muted-foreground">
-                Help other students by adding a residence hall that's not listed
+                Help other students by adding a residence hall that&apos;s not
+                listed
               </p>
             </div>
           </Link>

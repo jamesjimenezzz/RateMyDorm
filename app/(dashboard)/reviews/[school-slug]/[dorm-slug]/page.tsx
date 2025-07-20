@@ -12,7 +12,7 @@ import { fetchReviews } from "@/lib/server/fetchReviews";
 const ReviewMainPage = async ({
   params,
 }: {
-  params: { "school-slug": string; "dorm-slug": string };
+  params: Promise<{ "school-slug": string; "dorm-slug": string }>;
 }) => {
   const queryClient = new QueryClient();
 

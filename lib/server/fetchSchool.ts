@@ -10,7 +10,7 @@ export async function fetchSchool(slug: string) {
     });
 
     return school;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

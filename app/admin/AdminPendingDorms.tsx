@@ -5,7 +5,7 @@ import { useFetchPendingDorms } from "@/hooks/useDorm";
 import { Dorm, School } from "@prisma/client";
 
 const AdminPendingDorms = () => {
-  const { data: pendingDorms, isLoading } = useFetchPendingDorms();
+  const { data: pendingDorms } = useFetchPendingDorms();
 
   return (
     <div>

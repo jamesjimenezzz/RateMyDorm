@@ -11,13 +11,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import placeholder from "@/public/placeholder.svg";
-import { School } from "@prisma/client";
 
-interface Props {
-  schools: School[];
-}
-
-const PopSchools = ({ schools }: Props) => {
+const PopSchools = () => {
   return (
     <div className="min-h-screen w-full max-w-7xl mx-auto">
       <div className="flex flex-col gap-2">

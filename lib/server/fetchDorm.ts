@@ -18,7 +18,7 @@ export async function fetchDorm(slug: string) {
     });
 
     return dorm;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

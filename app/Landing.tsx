@@ -50,8 +50,11 @@ const Landing = () => {
           <Button className="py-5.5 px-10">Browse All School</Button>
         </div>
         <div className="flex justify-between items-center ">
-          {stats.map((stat) => (
-            <div className="flex flex-col gap-1.5 items-center justify-center ">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-1.5 items-center justify-center "
+            >
               <div className="bg-gray-200 rounded-lg text-gray-600  p-3">
                 {stat.icon}
               </div>

@@ -2,7 +2,7 @@
 import React from "react";
 import HeaderReview from "./HeaderReview";
 import HeroReview from "./HeroReview";
-import { notFound, useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { useFetchSchool } from "@/hooks/useSchool";
 import { useFetchDorm } from "@/hooks/useDorm";
 import Spinner from "@/components/Spinner";
