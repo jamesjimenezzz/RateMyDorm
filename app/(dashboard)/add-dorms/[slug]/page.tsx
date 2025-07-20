@@ -12,6 +12,7 @@ import { useFetchSchool } from "@/hooks/useSchool";
 import { useAddDorm } from "@/hooks/useDorm";
 import { Dorm } from "@prisma/client";
 import { toast } from "sonner";
+import { titleCase } from "title-case";
 import Spinner from "@/components/Spinner";
 
 const AddDormsPage = () => {
@@ -102,6 +103,7 @@ const AddDormsPage = () => {
     const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
 
     const files = (data.photos as File[]) || undefined;
+    const finalName = titleCase(data.dormName);
 
     try {
       const uploadedUrls = files
@@ -114,6 +116,7 @@ const AddDormsPage = () => {
 
       const finalPayLoad = {
         ...data,
+        dormName: finalName,
         photos: uploadedUrls,
       };
       mutate(

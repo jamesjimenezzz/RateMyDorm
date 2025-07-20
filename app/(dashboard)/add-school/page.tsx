@@ -6,6 +6,7 @@ import { Upload } from "lucide-react";
 import { addSchoolSchema, AddSchoolSchemaType } from "@/lib/addSchoolSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { titleCase } from "title-case";
 
 import {
   Card,
@@ -44,6 +45,8 @@ const AddSchool = () => {
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
     const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
 
+    const finalName = titleCase(data.name);
+
     if (data.picture) {
       const formData = new FormData();
       formData.append("file", data.picture);
@@ -61,6 +64,7 @@ const AddSchool = () => {
 
         const finalPayLoad = {
           ...data,
+          name: finalName,
           picture: uploadedUrl,
         };
 

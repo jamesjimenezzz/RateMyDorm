@@ -44,7 +44,7 @@ const DormPage = ({
               {school?.dorms?.reduce(
                 (acc, dorm) => acc + dorm.reviews.length,
                 0
-              )}{" "}
+              ) || 0}{" "}
               Dorm Reviews Found
             </p>
           </div>
