@@ -61,3 +61,18 @@ export async function fetchPendingDorms() {
     return null;
   }
 }
+
+export async function fetchDorms(slug: string, page: number) {
+  try {
+    const res = await fetch(`/api/dorms/${slug}?page=${page}&limit=12`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch dorms");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: "Failed to fetch dorms" };
+  }
+}

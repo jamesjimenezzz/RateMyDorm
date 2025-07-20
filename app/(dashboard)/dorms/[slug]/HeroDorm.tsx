@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 import { SquareArrowOutUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,12 +7,31 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import { ChartColumnIncreasing } from "lucide-react";
 import { Award } from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 import Dorms from "./Dorms";
 import { School, Review } from "@prisma/client";
 import { Dorm } from "@prisma/client";
+import { useFetchDorms } from "@/hooks/useDorm";
+import Spinner from "@/components/Spinner";
 
 const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
+  const [page, setPage] = useState<number>(1);
+
+  const { data, isLoading } = useFetchDorms(school.slug as string, page);
+
+  const { dorms, haveMore } = data || {};
+
+  if (isLoading) return <Spinner />;
+
   return (
     <div className="bg-[#f9fafb] py-12 px-5 w-full">
       <div className=" max-w-7xl mx-auto">
@@ -27,26 +46,30 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
             Share your experience and read honest reviews from fellow students
           </p>
           <div className="text-muted-foreground flex gap-5">
-            <p>{school?.dorms?.length} residence halls</p>
+            <p>{dorms?.length} residence halls</p>
             <span>•</span>
             <p>168 total reviews</p>
           </div>
         </div>
         <div className="grid grid-cols-3 gap-5 py-10">
-          {school?.dorms?.length > 0 ? (
-            school?.dorms?.map((dorm) => (
-              <Dorms
-                key={dorm.id}
-                dorm={dorm as Dorm & { reviews: Review[] } & { school: School }}
-              />
-            ))
+          {dorms?.length > 0 ? (
+            dorms?.map(
+              (dorm: Dorm & { reviews: Review[] } & { school: School }) => (
+                <Dorms
+                  key={dorm.id}
+                  dorm={
+                    dorm as Dorm & { reviews: Review[] } & { school: School }
+                  }
+                />
+              )
+            )
           ) : (
             <div className="flex justify-center items-center h-full w-full">
               <p>No dorms found</p>
             </div>
           )}
         </div>
-        {school?.dorms?.length > 6 && (
+        {dorms?.length > 6 && (
           <div className="flex justify-center pb-10 ">
             <Button
               variant={"outline"}
@@ -55,6 +78,44 @@ const HeroDorm = ({ school }: { school: School & { dorms: Dorm[] } }) => {
               See More
             </Button>
           </div>
+        )}
+
+        {dorms && dorms.length >= 12 && (
+          <Pagination className="flex justify-center py-10">
+            <PaginationContent>
+              {page > 1 && (
+                <>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={() => setPage(page - 1)}
+                      href="#"
+                    />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">{page - 1}</PaginationLink>
+                  </PaginationItem>
+                </>
+              )}
+              <PaginationItem>
+                <PaginationLink href="#" isActive>
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+              {haveMore && (
+                <>
+                  <PaginationItem>
+                    <PaginationLink href="#">3</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationNext href="#" />
+                  </PaginationItem>
+                </>
+              )}
+            </PaginationContent>
+          </Pagination>
         )}
 
         <div className="py-10 max-w-lg mx-auto hover:bg-gray-100 transition-all duration-300 hover:border-gray-600  border-2 border-gray-300 border-dashed  rounded-lg bg-white w-full">

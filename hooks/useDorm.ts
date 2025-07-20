@@ -2,7 +2,7 @@ import {
   FetchPendingDorms,
   updatePendingDorms,
 } from "@/lib/api/admin/AdminFetches";
-import { addDorm, fetchDorm } from "@/lib/api/dorms";
+import { addDorm, fetchDorm, fetchDorms } from "@/lib/api/dorms";
 import {
   useMutation,
   useQuery,
@@ -40,5 +40,13 @@ export function useUpdatePendingDorms() {
       queryClient.invalidateQueries({ queryKey: ["dorms"] });
       queryClient.invalidateQueries({ queryKey: ["pendingDorms"] });
     },
+  });
+}
+
+export function useFetchDorms(slug: string, page: number) {
+  return useQuery({
+    queryKey: ["dorms", slug, page],
+    queryFn: () => fetchDorms(slug, page),
+    staleTime: 1000 * 60 * 5,
   });
 }

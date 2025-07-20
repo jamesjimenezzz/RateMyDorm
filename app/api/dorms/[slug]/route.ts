@@ -7,15 +7,35 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   const { slug } = await params;
+  const { searchParams } = new URL(req.url);
+
+  const page = Number(searchParams.get("page")) || 1;
+  const limit = Number(searchParams.get("limit")) || 12;
+  const skip = (page - 1) * limit;
+
+  const totalDorms = await prisma.dorm.count({
+    where: {
+      schoolSlug: slug,
+      status: "approved",
+    },
+  });
+
+  const haveMore = totalDorms === limit;
+
   try {
-    const dorm = await prisma.dorm.findMany({
+    const dorms = await prisma.dorm.findMany({
       where: {
         schoolSlug: slug,
         status: "approved",
       },
+      skip,
+      take: limit,
+      include: {
+        reviews: true,
+      },
     });
 
-    return NextResponse.json(dorm);
+    return NextResponse.json({ dorms, haveMore });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch dorms" },
