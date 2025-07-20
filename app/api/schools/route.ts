@@ -11,20 +11,6 @@ export async function GET() {
       orderBy: {
         createdAt: "desc",
       },
-      include: {
-        dorms: {
-          where: {
-            status: "approved",
-          },
-          include: {
-            reviews: {
-              where: {
-                status: "approved",
-              },
-            },
-          },
-        },
-      },
     });
 
     return NextResponse.json(schools);

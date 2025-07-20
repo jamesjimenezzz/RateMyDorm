@@ -1,29 +1,13 @@
 "use client";
 import React from "react";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import Image from "next/image";
-import placeholder from "@/public/placeholder.svg";
-import { Rating } from "react-simple-star-rating";
-import { Users } from "lucide-react";
-import { MessageSquareMore } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import { Star } from "lucide-react";
+
 import { SquareArrowOutUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { ChartColumnIncreasing } from "lucide-react";
 import { Award } from "lucide-react";
-import { useParams } from "next/navigation";
-import placeholder2 from "@/public/placeholder2.png";
+
 import Dorms from "./Dorms";
 import { School, Review } from "@prisma/client";
 import { Dorm } from "@prisma/client";

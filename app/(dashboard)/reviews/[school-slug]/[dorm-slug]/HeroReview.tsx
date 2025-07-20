@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import {
   Card,
@@ -50,16 +51,6 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
 
   const reviews = data?.reviews;
   const hasMore = data?.hasMore;
-
-  if (reviews?.length === 0) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-gray-500">
-          No reviews found yet, please check back later
-        </p>
-      </div>
-    );
-  }
 
   if (isLoading) return <Spinner />;
 
