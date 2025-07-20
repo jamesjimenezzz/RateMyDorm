@@ -1,14 +1,6 @@
 import { School } from "@prisma/client";
 import React from "react";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Check } from "lucide-react";
 import { Trash } from "lucide-react";

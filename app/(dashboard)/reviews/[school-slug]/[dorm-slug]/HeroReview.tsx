@@ -1,20 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Rating } from "react-simple-star-rating";
 import { Progress } from "@/components/ui/progress";
 import { SquareArrowOutUpRight, Star } from "lucide-react";
 import Link from "next/link";
 import LabelForm from "@/components/LabelForm";
-import { Button } from "@/components/ui/button";
 import Review from "./Review";
 import { Dorm, Review as ReviewType, User } from "@prisma/client";
 import { calculateRatings } from "@/lib/calculateRatings";

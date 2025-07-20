@@ -13,14 +13,6 @@ export async function GET(
         slug: slug,
         status: "approved",
       },
-      include: {
-        school: true,
-        reviews: {
-          where: {
-            status: "approved",
-          },
-        },
-      },
     });
 
     return NextResponse.json(dorm);

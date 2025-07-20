@@ -18,20 +18,20 @@ const ReviewMainPage = async ({
 
   const { "school-slug": schoolSlug, "dorm-slug": dormSlug } = await params;
 
-  await queryClient.prefetchQuery({
-    queryKey: ["school", schoolSlug],
-    queryFn: () => fetchSchool(schoolSlug),
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ["dorm", dormSlug],
-    queryFn: () => fetchDorm(dormSlug),
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ["reviews", dormSlug],
-    queryFn: () => fetchReviews(dormSlug),
-  });
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ["school", schoolSlug],
+      queryFn: () => fetchSchool(schoolSlug),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["dorm", dormSlug],
+      queryFn: () => fetchDorm(dormSlug),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["reviews", dormSlug],
+      queryFn: () => fetchReviews(dormSlug),
+    }),
+  ]);
 
   return (
     <>

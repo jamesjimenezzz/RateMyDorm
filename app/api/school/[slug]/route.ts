@@ -13,20 +13,6 @@ export async function GET(
         slug: slug,
         status: "approved",
       },
-      include: {
-        dorms: {
-          where: {
-            status: "approved",
-          },
-          include: {
-            reviews: {
-              where: {
-                status: "approved",
-              },
-            },
-          },
-        },
-      },
     });
 
     return NextResponse.json(school);

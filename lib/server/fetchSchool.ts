@@ -7,20 +7,6 @@ export async function fetchSchool(slug: string) {
         slug: slug,
         status: "approved",
       },
-      include: {
-        dorms: {
-          where: {
-            status: "approved",
-          },
-          include: {
-            reviews: {
-              where: {
-                status: "approved",
-              },
-            },
-          },
-        },
-      },
     });
 
     return school;

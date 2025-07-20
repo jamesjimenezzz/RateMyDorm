@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FirstPage from "./FirstPage";
 import SecondPage from "./SecondPage";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,6 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addDormSchema, AddDormSchemaType } from "@/lib/addDormSchema";
 import { uploadCloudinary } from "@/lib/uploadCloudinary";
-import { FileSymlink } from "lucide-react";
 import { notFound, useParams } from "next/navigation";
 import { useFetchSchool } from "@/hooks/useSchool";
 import { useAddDorm } from "@/hooks/useDorm";

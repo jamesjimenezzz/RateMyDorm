@@ -6,7 +6,6 @@ import { notFound, useParams } from "next/navigation";
 import { useFetchSchool } from "@/hooks/useSchool";
 import { useFetchDorm } from "@/hooks/useDorm";
 import Spinner from "@/components/Spinner";
-import { useFetchReviews } from "@/hooks/useReview";
 
 interface Props {
   schoolSlug: string;

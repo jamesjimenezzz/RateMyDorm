@@ -1,12 +1,10 @@
 "use client";
-import BackToHome from "@/components/BackToHome";
 import React, { useState, useEffect } from "react";
 import { MapPin, Star } from "lucide-react";
 import { Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import placeholder from "@/public/placeholder.svg";
 import Image from "next/image";
-import { Rating } from "react-simple-star-rating";
 import { Dorm, Review, School } from "@prisma/client";
 import BackToAllSchools from "@/components/BackToAllSchools";
 

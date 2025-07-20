@@ -31,7 +31,11 @@ export async function GET(
       skip,
       take: limit,
       include: {
-        reviews: true,
+        reviews: {
+          where: {
+            status: "approved",
+          },
+        },
       },
     });
 

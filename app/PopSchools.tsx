@@ -1,20 +1,13 @@
 import React from "react";
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import ateneo from "@/public/ateneo.png";
-import lasalle from "@/public/lasalle.jpg";
-import upd from "@/public/upd.jpg";
-import ust from "@/public/ust.jpg";
-import slu from "@/public/slu.jpg";
-import mapua from "@/public/mapua.jpg";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import placeholder from "@/public/placeholder.svg";

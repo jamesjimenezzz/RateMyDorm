@@ -1,10 +1,8 @@
+"use client";
 import React, { useState } from "react";
 import { MapPin, Star } from "lucide-react";
-import { Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import placeholder from "@/public/placeholder.svg";
-import Image from "next/image";
-import { Rating } from "react-simple-star-rating";
+
 import DormsBackToUniv from "@/components/DormsBackToUniv";
 import { Dorm, Review, School } from "@prisma/client";
 import Link from "next/link";
@@ -61,13 +59,7 @@ const DormPage = ({ school, dorm }: HeaderReviewProps) => {
           </div>
         </div>
         <div className="h-80 w-full">
-          <Image
-            className="h-full w-full object-cover rounded-lg"
-            src={placeholder}
-            alt="dorm"
-            width={800}
-            height={300}
-          />
+          <div className="h-full w-[600px] bg-gray-200 animate-pulse rounded-lg" />
         </div>
       </div>
     </div>

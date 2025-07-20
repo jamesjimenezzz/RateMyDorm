@@ -1,7 +1,6 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import BackToHome from "@/components/BackToHome";
+
 import LabelForm from "@/components/LabelForm";
 import { useFormContext } from "react-hook-form";
 import { School } from "@prisma/client";

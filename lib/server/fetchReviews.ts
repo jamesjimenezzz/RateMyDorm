@@ -7,9 +7,6 @@ export async function fetchReviews(slug: string) {
         dormSlug: slug,
         status: "approved",
       },
-      include: {
-        dorm: true,
-      },
     });
 
     return reviews;
