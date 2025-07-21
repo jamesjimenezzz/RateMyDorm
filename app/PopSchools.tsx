@@ -1,18 +1,15 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import placeholder from "@/public/placeholder.svg";
+import { Dorm, Review, School } from "@prisma/client";
+import PopSchool from "./PopSchool";
 
-const PopSchools = () => {
+const PopSchools = ({
+  schools,
+}: {
+  schools: (School & { dorms: (Dorm & { reviews: Review[] })[] })[];
+}) => {
   return (
     <div className="min-h-screen w-full max-w-7xl mx-auto">
       <div className="flex flex-col gap-2">
@@ -21,156 +18,10 @@ const PopSchools = () => {
           Explore the most reviewed universities on our platform
         </p>
       </div>
-      <div className="grid grid-cols-3 mt-10  gap-5">
-        <Card className="p-0 gap-0    ">
-          <CardHeader className="p-0 ">
-            <Image
-              className="h-48 w-full object-cover rounded-md"
-              src={placeholder}
-              alt="ateneo"
-              width={300}
-              height={200}
-            />
-          </CardHeader>
-          <CardContent className="text-start flex flex-col gap-2 px-6 py-5">
-            <CardTitle className="text-lg font-bold flex flex-col gap-1">
-              <p>University of the Philippines</p>
-              <p className="text-sm text-muted-foreground font-normal">
-                Manila, Philippines
-              </p>
-            </CardTitle>
-
-            <CardFooter className="p-0 flex justify-between">
-              <p className="text-sm text-muted-foreground">433 reviews</p>
-              <Button className="py-0">View</Button>
-            </CardFooter>
-          </CardContent>
-        </Card>
-
-        <Card className="p-0 gap-0   ">
-          <CardHeader className="p-0">
-            <Image
-              className="h-48 w-full object-cover rounded-md"
-              src={placeholder}
-              alt="lasalle"
-              width={300}
-              height={200}
-            />
-          </CardHeader>
-          <CardContent className="text-start flex flex-col gap-2 px-6 py-5">
-            <CardTitle className="text-lg font-bold flex flex-col gap-1">
-              <p>University of the Philippines</p>
-              <p className="text-sm text-muted-foreground font-normal">
-                Manila, Philippines
-              </p>
-            </CardTitle>
-
-            <CardFooter className="p-0 flex justify-between">
-              <p className="text-sm text-muted-foreground">433 reviews</p>
-              <Button className="py-0">View</Button>
-            </CardFooter>
-          </CardContent>
-        </Card>
-
-        <Card className="p-0 gap-0   ">
-          <CardHeader className="p-0">
-            <Image
-              className="h-48 w-full object-cover rounded-md"
-              src={placeholder}
-              alt="upd"
-              width={300}
-              height={200}
-            />
-          </CardHeader>
-          <CardContent className="text-start flex flex-col gap-2 px-6 py-5">
-            <CardTitle className="text-lg font-bold flex flex-col gap-1">
-              <p>University of the Philippines</p>
-              <p className="text-sm text-muted-foreground font-normal">
-                Manila, Philippines
-              </p>
-            </CardTitle>
-
-            <CardFooter className="p-0 flex justify-between">
-              <p className="text-sm text-black">433 reviews</p>
-              <Button className="py-0">View</Button>
-            </CardFooter>
-          </CardContent>
-        </Card>
-
-        <Card className="p-0 gap-0 w-full   ">
-          <CardHeader className="p-0 ">
-            <Image
-              className="h-48 w-full object-cover rounded-md"
-              src={placeholder}
-              alt="ust"
-              width={300}
-              height={200}
-            />
-          </CardHeader>
-          <CardContent className="text-start flex flex-col gap-2 px-6 py-5">
-            <CardTitle className="text-lg font-bold flex flex-col gap-1">
-              <p>University of the Philippines</p>
-              <p className="text-sm text-muted-foreground font-normal">
-                Manila, Philippines
-              </p>
-            </CardTitle>
-
-            <CardFooter className="p-0 flex justify-between">
-              <p className="text-sm text-muted-foreground">433 reviews</p>
-              <Button className="py-0">View</Button>
-            </CardFooter>
-          </CardContent>
-        </Card>
-
-        <Card className="p-0 gap-0   ">
-          <CardHeader className="p-0">
-            <Image
-              className="h-48 w-full object-cover rounded-md"
-              src={placeholder}
-              alt="slu"
-              width={300}
-              height={200}
-            />
-          </CardHeader>
-          <CardContent className="text-start flex flex-col gap-2 px-6 py-5">
-            <CardTitle className="text-lg font-bold flex flex-col gap-1">
-              <p>University of the Philippines</p>
-              <p className="text-sm text-muted-foreground font-normal">
-                Manila, Philippines
-              </p>
-            </CardTitle>
-
-            <CardFooter className="p-0 flex justify-between">
-              <p className="text-sm text-muted-foreground">433 reviews</p>
-              <Button className="py-0">View</Button>
-            </CardFooter>
-          </CardContent>
-        </Card>
-
-        <Card className="p-0 gap-0   ">
-          <CardHeader className="p-0">
-            <Image
-              className="h-48 w-full object-cover rounded-md"
-              src={placeholder}
-              alt="mapua"
-              width={300}
-              height={200}
-            />
-          </CardHeader>
-          <CardContent className="text-start flex flex-col gap-2 px-6 py-5">
-            <CardTitle className="text-lg font-bold flex flex-col gap-1">
-              <p>University of the Philippines</p>
-              <p className="text-sm text-muted-foreground font-normal">
-                Manila, Philippines
-              </p>
-            </CardTitle>
-
-            <CardFooter className="p-0 flex justify-between">
-              <p className="text-sm text-muted-foreground">433 reviews</p>
-              <Button className="py-0">View</Button>
-            </CardFooter>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-3 mt-10  gap-6">
+        {schools.map((school) => (
+          <PopSchool key={school.id} school={school} />
+        ))}
       </div>
       <div className="flex justify-center items-center mt-10">
         <Link href="/all-schools">
