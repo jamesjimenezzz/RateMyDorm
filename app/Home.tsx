@@ -9,10 +9,12 @@ import { School } from "@prisma/client";
 import { Dorm } from "@prisma/client";
 import { Review } from "@prisma/client";
 import { HomePageDorms } from "@/lib/server/HomePageDorms";
+import { HomePageRateDorms } from "@/lib/server/HomePageRateDorms";
 
 const Home = async () => {
   const schools = await HomePageSchools();
   const dorms = await HomePageDorms();
+  const ratedDorms = await HomePageRateDorms();
   return (
     <>
       <div className="max-w-7xl px-5 text-center flex flex-col items-center justify-center  overflow-hidden mx-auto">
@@ -31,7 +33,13 @@ const Home = async () => {
             })[]
           }
         />
-        <HighestRatingDorms />
+        <HighestRatingDorms
+          dorms={
+            ratedDorms as unknown as (Dorm & { reviews: Review[] } & {
+              school: School;
+            })[]
+          }
+        />
       </div>
     </>
   );
