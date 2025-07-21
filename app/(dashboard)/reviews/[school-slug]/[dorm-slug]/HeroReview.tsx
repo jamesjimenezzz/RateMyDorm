@@ -63,7 +63,7 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
   });
 
   return (
-    <div className="bg-[#f9fafb] py-15 w-full">
+    <div id="reviews" className="bg-[#f9fafb] py-15 w-full">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col gap-2 justify-center items-center text-center">
           <h1 className="text-3xl font-bold">Student Reviews</h1>
@@ -270,14 +270,14 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                       <PaginationItem>
                         <PaginationPrevious
                           onClick={() => setPage(page - 1)}
-                          href="#"
+                          href="#reviews"
                         />
                       </PaginationItem>
 
                       <PaginationItem>
                         <PaginationLink
                           onClick={() => setPage(page - 1)}
-                          href="#"
+                          href="#reviews"
                         >
                           {page - 1}
                         </PaginationLink>
@@ -286,14 +286,16 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                   )}
 
                   <PaginationItem>
-                    <PaginationLink href="#" isActive>
+                    <PaginationLink href="#reviews" isActive>
                       {page}
                     </PaginationLink>
                   </PaginationItem>
                   {hasMore && (
                     <>
                       <PaginationItem>
-                        <PaginationLink href="#">{page + 1}</PaginationLink>
+                        <PaginationLink href="#reviews">
+                          {page + 1}
+                        </PaginationLink>
                       </PaginationItem>
                       <PaginationItem>
                         <PaginationEllipsis />
@@ -301,7 +303,7 @@ const HeroReview = ({ dorm, dormSlug }: Props) => {
                       <PaginationItem>
                         <PaginationNext
                           onClick={() => setPage(page + 1)}
-                          href="#"
+                          href="#reviews"
                         />
                       </PaginationItem>
                     </>
