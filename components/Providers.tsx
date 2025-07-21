@@ -11,7 +11,14 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     <QueryClientProvider client={queryClient}>
       <ClerkProvider>
         {children}
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            classNames: {
+              error: "bg-red-500 text-white font-semibold shadow-lg",
+              success: "bg-green-500 text-white font-semibold shadow-lg",
+            },
+          }}
+        />
       </ClerkProvider>
     </QueryClientProvider>
   );

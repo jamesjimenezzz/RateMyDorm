@@ -7,16 +7,22 @@ import { School } from "@prisma/client";
 import BackToSpecificSchool from "@/components/BackToSpecificSchool";
 import { useParams } from "next/navigation";
 import { useFetchSchool } from "@/hooks/useSchool";
+import { checkDorms } from "@/lib/server/checkSchools";
+import { toast } from "sonner";
 
 const FirstPage = ({ school }: { school: School }) => {
   const {
     register,
     formState: { errors },
+    setError,
+    watch,
+    clearErrors,
   } = useFormContext();
 
   const { slug } = useParams();
 
   const { data: schoolLink } = useFetchSchool(slug as string);
+  const dormName = watch("dormName");
 
   return (
     <div className="pt-20  items-center mx-auto overflow-hidden flex-1   justify-center text-center">

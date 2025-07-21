@@ -14,6 +14,7 @@ import { Dorm } from "@prisma/client";
 import { toast } from "sonner";
 import { titleCase } from "title-case";
 import Spinner from "@/components/Spinner";
+import { checkDorms } from "@/lib/server/checkSchools";
 
 const AddDormsPage = () => {
   const { slug } = useParams();
@@ -87,6 +88,18 @@ const AddDormsPage = () => {
             "classYear",
           ]
     );
+
+    const dormName = form.watch("dormName");
+
+    const exists = await checkDorms(school.slug, dormName as string);
+
+    if (exists) {
+      form.setError("dormName", {
+        type: "manual",
+        message: "Dorm already exists",
+      });
+      return;
+    }
 
     if (isValid) {
       setPage((prev) => prev + 1);

@@ -22,6 +22,7 @@ import { uploadCloudinary } from "@/lib/uploadCloudinary";
 import { useAddSchool } from "@/hooks/useSchool";
 import BackToAllSchools from "@/components/BackToAllSchools";
 import { toast } from "sonner";
+import { checkSchools } from "@/lib/server/checkSchools";
 
 const AddSchool = () => {
   const [picture, setPicture] = useState<File | string | null>(null);
@@ -46,6 +47,15 @@ const AddSchool = () => {
     const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
 
     const finalName = titleCase(data.name);
+
+    const exist = await checkSchools(finalName);
+
+    if (exist) {
+      toast.error("School already exists", {
+        className: "bg-red-500 text-black font-semibold",
+      });
+      return;
+    }
 
     if (data.picture) {
       const formData = new FormData();
