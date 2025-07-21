@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useReview } from "@/hooks/useReview";
 import { uploadCloudinary } from "@/lib/uploadCloudinary";
 import Spinner from "@/components/Spinner";
+import { toast } from "sonner";
 
 const AddReviews = () => {
   const [formKey] = useState(0);
@@ -62,6 +63,7 @@ const AddReviews = () => {
         { slug: slug as string, data: finalData },
         {
           onSuccess: () => {
+            toast.success("Review added successfully");
             router.push(`/reviews/${dorm.school.slug}/${dorm.slug}`);
           },
         }

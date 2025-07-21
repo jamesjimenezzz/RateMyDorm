@@ -44,8 +44,8 @@ const DormPage = ({ school, dorm }: HeaderReviewProps) => {
             {school.name}
           </p>
           <p className="text-gray-600 text-lg mb-2">
-            Boston University is a leading private research university with two
-            primary campuses in the heart of Boston.
+            Gagawan pa ng ai description typeshit placeholder para di
+            makalimutan
           </p>
 
           <div className="flex items-center gap-4 text-sm">
